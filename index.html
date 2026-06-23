@@ -168,14 +168,12 @@
     /* detail becomes a slide-up sheet */
     .side{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:100;
       transform:translateY(102%);transition:transform .3s cubic-bezier(.4,0,.2,1);
-      max-height:85vh;display:flex;flex-direction:column}
+      max-height:62vh;display:flex;flex-direction:column}
     body.sheet-open .side{transform:translateY(0)}
     .sheet-close{display:flex}
     .detail{border:none;border-radius:18px 18px 0 0;overflow-y:auto;
       padding:48px 20px 40px;flex:1;min-height:0;box-shadow:0 -12px 44px rgba(0,0,0,.6)}
-    #sheetBackdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.55);
-      opacity:0;pointer-events:none;transition:opacity .3s;z-index:90}
-    body.sheet-open #sheetBackdrop{opacity:1;pointer-events:auto}
+    /* no dimming backdrop: the list stays tappable while the sheet is open; close via the ✕ */
   }
   @media (max-width:640px){.wrap{padding:32px 16px 70px}}
   .scopebar{margin:11px 0 3px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
@@ -312,6 +310,9 @@ const SYSTEMS = [
   /*10*/{start:1773,end:2026,title:"Black excellence, culture & institutions",pos:true,
     detail:"The building of Black institutions and the breaking of barriers in culture, science, and the academy — from Phillis Wheatley’s poetry under slavery and the schools of the Sea Islands, through the first HBCUs, Nobel Prizes, Pulitzers, Oscars, and spaceflight. Achievement pursued and won in the teeth of every system on this list.",
     src:"U.S. National Park Service; The Nobel Prize; The Pulitzer Prizes; NASA"},
+  /*11*/{start:1785,end:2026,title:"Medical & scientific racism",
+    detail:"The long use of medicine and science to harm Black people and to manufacture the very idea of their inferiority — from the pseudo-science that ranked races to justify slavery, through experimentation on Black bodies, forced sterilization, and the Tuskegee study, to present-day gaps in pain treatment and maternal survival. The ideas were dressed as fact; the harms were real.",
+    src:"Harriet A. Washington, Medical Apartheid (2007)"},
 ];
 
 /* valence: advance|setback|compromise|achievement ; court:true => diamond ; sys:[system indices] */
@@ -332,6 +333,18 @@ const EVENTS = [
   {era:0,valence:"advance",year:1780,sys:[0],title:"Northern abolition begins",
     detail:"Pennsylvania\u2019s gradual-abolition act freed no one immediately \u2014 it freed the future children of the enslaved at age 28 \u2014 but it was the first such law in the new nation, and most Northern states followed.",
     src:"An Act for the Gradual Abolition of Slavery, Pennsylvania (1780)"},
+  {era:0,valence:"setback",year:1785,sys:[11],title:"Jefferson's Notes on Virginia",
+    detail:"In his only book, Thomas Jefferson advanced as a “suspicion only” that Black people were innately inferior in body and mind — a claim from the nation's leading intellectual that race science would later dress up as proven fact and slavery's defenders would cite for decades.",
+    src:"Thomas Jefferson, Notes on the State of Virginia (1785); Library of Congress"},
+  {era:0,valence:"setback",year:1839,sys:[11],title:"The “American School” of race science",
+    detail:"Physician Samuel Morton filled skulls with seed to argue that brain size proved a racial hierarchy, and the polygenists who followed claimed Black people were a separate, lesser species. Their craniometry gave slavery a veneer of science — and was later shown to be shaped by the very bias it claimed to measure.",
+    src:"Samuel Morton, Crania Americana (1839); Stephen Jay Gould, The Mismeasure of Man (1981)"},
+  {era:0,valence:"setback",year:1845,sys:[11],title:"J. Marion Sims's experiments",
+    detail:"The surgeon later called the father of modern gynecology developed his techniques by operating repeatedly on enslaved Black women — among them Anarcha, Lucy, and Betsey — without anesthesia and without any meaningful consent. Their suffering built a reputation that long obscured their names.",
+    src:"Harriet A. Washington, Medical Apartheid (2007)"},
+  {era:0,valence:"setback",year:1851,sys:[11],title:"Drapetomania",
+    detail:"A Louisiana physician, Samuel Cartwright, coined “drapetomania,” a fictitious disease said to cause enslaved people to flee, and another to explain their supposed laziness. Resistance to bondage was recast as mental illness — medicine pressed into the service of slavery.",
+    src:"Samuel A. Cartwright, De Bow's Review (1851); Harriet A. Washington, Medical Apartheid (2007)"},
   {era:0,valence:"setback",year:1787,sys:[0,3],title:"The Three-Fifths Clause",
     detail:"The Constitution counted each enslaved person as three-fifths of a free person for apportioning seats in Congress and direct taxes — giving slaveholding states political power built on people who had no rights and no vote, and writing the denial of Black personhood into the founding document. It stood until the 14th Amendment repealed it in 1868.",
     src:"U.S. Constitution, Article I, Section 2; National Archives"},
@@ -439,6 +452,48 @@ const EVENTS = [
   {era:2,valence:"advance",year:1928,sys:[1],title:"Alabama ends convict leasing",
     detail:"Alabama became the last state to formally abolish convict leasing \u2014 more than sixty years after emancipation. Forced labor persisted in other forms, chiefly chain gangs and peonage, until federal action (Circular 3591) in 1941.",
     src:"Douglas A. Blackmon, Slavery by Another Name (2008); End Slavery Now",url:"https://www.pbs.org/tpt/slavery-by-another-name/themes/convict-leasing/"},
+  {era:2,valence:"advance",year:1892,sys:[4],title:"Ida B. Wells's anti-lynching crusade",
+    detail:"After three friends were lynched in Memphis, the journalist Ida B. Wells launched a documentary campaign exposing lynching as racial terror used to control and dispossess Black communities — not a response to crime. Her data-driven reporting built the foundation of the anti-lynching movement.",
+    src:"Ida B. Wells, Southern Horrors (1892); U.S. National Park Service"},
+  {era:2,valence:"setback",year:1898,sys:[3,4],title:"Wilmington coup & massacre",
+    detail:"A white mob in Wilmington, North Carolina, overthrew the city's elected biracial government by force, killed an estimated 60 to 300 Black residents, and drove thousands out — the only successful coup d'état on U.S. soil. It became a template for imposing white rule across the South.",
+    src:"1898 Wilmington Race Riot Commission (State of North Carolina); Zinn Education Project"},
+  {era:2,valence:"advance",year:1909,sys:[9,10],title:"NAACP founded",
+    detail:"An interracial group including W.E.B. Du Bois founded the National Association for the Advancement of Colored People to fight disenfranchisement, segregation, and lynching through law and organizing. Its legal arm would later win Brown v. Board and anchor the civil rights movement.",
+    src:"NAACP; Library of Congress"},
+  {era:2,valence:"advance",year:1916,sys:[9,10],title:"The Great Migration begins",
+    detail:"Over six decades, some six million Black Americans left the rural South for cities in the North, Midwest, and West — fleeing terror and Jim Crow, seeking work and freedom. It remade Black political power, built new communities and institutions, and seeded movements in culture and civil rights.",
+    src:"Isabel Wilkerson, The Warmth of Other Suns (2010); U.S. Census Bureau"},
+  {era:2,valence:"setback",year:1919,sys:[4],title:"Red Summer",
+    detail:"In the months after World War I, white mobs attacked Black communities in dozens of cities — Chicago, Washington, Elaine in Arkansas, and more — killing hundreds, often as Black veterans and migrants asserted new rights. It was among the deadliest waves of racial violence in the nation's history.",
+    src:"Equal Justice Initiative; Cameron McWhirter, Red Summer (2011)"},
+  {era:2,valence:"setback",year:1923,sys:[4],title:"Rosewood massacre",
+    detail:"A white mob destroyed the prosperous Black town of Rosewood, Florida, killing residents and burning it to the ground over a false accusation. Survivors fled and never returned, and the town vanished from the map. Florida formally compensated survivors and descendants in 1994.",
+    src:"State of Florida, 1993 Rosewood Report; Florida Memory"},
+  {era:2,valence:"achievement",year:1925,sys:[10],title:"The Harlem Renaissance",
+    detail:"Fed by the Great Migration, a flowering of Black literature, music, and art centered in Harlem in the 1920s — Langston Hughes, Zora Neale Hurston, Duke Ellington, and many more — asserted Black creative and intellectual life on its own terms and reshaped American culture.",
+    src:"National Museum of African American History & Culture; Library of Congress"},
+  {era:2,valence:"advance",year:1925,sys:[9],title:"Brotherhood of Sleeping Car Porters",
+    detail:"A. Philip Randolph organized the first major Black labor union, winning recognition from the Pullman Company in 1937. It built Black economic and political power and made Randolph a force who would press presidents for fair-employment orders and help lead the March on Washington.",
+    src:"AFL-CIO; Library of Congress"},
+  {era:2,valence:"setback",year:1931,sys:[2],title:"The Scottsboro Boys",
+    detail:"Nine Black teenagers were falsely accused of raping two white women in Alabama and nearly all sentenced to death by all-white juries. Their long ordeal exposed Jim Crow justice and produced two landmark Supreme Court rulings — on the right to counsel and the exclusion of Black jurors.",
+    src:"Powell v. Alabama, 287 U.S. 45 (1932); Norris v. Alabama, 294 U.S. 587 (1935)"},
+  {era:2,valence:"setback",year:1932,sys:[11],title:"The Tuskegee syphilis study",
+    detail:"For 40 years, the U.S. Public Health Service studied untreated syphilis in some 400 Black men in Alabama, deliberately withholding penicillin even after it became the standard cure. Exposed in 1972, it became a defining case of medical racism and a lasting source of distrust.",
+    src:"U.S. Centers for Disease Control and Prevention; Tuskegee Study Ad Hoc Advisory Panel report (1973)"},
+  {era:2,valence:"advance",year:1948,sys:[5],title:"Shelley v. Kraemer",court:true,
+    detail:"The Supreme Court held that courts could not enforce racially restrictive covenants — the private agreements barring sales to Black buyers that, alongside redlining, walled off white neighborhoods. The covenants lingered in practice, but the legal machinery behind them was broken.",
+    src:"Shelley v. Kraemer, 334 U.S. 1 (1948) — Justia"},
+  {era:2,valence:"setback",year:1896,sys:[11],title:"Race Traits and Tendencies",
+    detail:"In the same year as Plessy, the statistician Frederick Hoffman published an influential study claiming Black Americans were biologically destined to sicken and die out — a thesis insurers used to deny Black people life insurance and that lent segregation and neglect a statistical alibi.",
+    src:"Frederick L. Hoffman, Race Traits and Tendencies of the American Negro (1896)"},
+  {era:2,valence:"setback",year:1927,sys:[11],title:"Buck v. Bell & forced sterilization",court:true,
+    detail:"The Supreme Court upheld compulsory sterilization with the words “three generations of imbeciles are enough,” clearing the way for eugenics laws that sterilized tens of thousands. The burden fell heavily on Black women — a practice that would continue into the 1970s.",
+    src:"Buck v. Bell, 274 U.S. 200 (1927); Harriet A. Washington, Medical Apartheid (2007)"},
+  {era:2,valence:"setback",year:1951,sys:[11],title:"Henrietta Lacks & HeLa",
+    detail:"Cells taken without consent from Henrietta Lacks, a Black woman treated for cancer at Johns Hopkins, became the first immortal human cell line and a foundation of modern medicine — multiplying through countless labs and products while her family was left uninformed and uncompensated for decades.",
+    src:"Rebecca Skloot, The Immortal Life of Henrietta Lacks (2010); Johns Hopkins Medicine"},
   {era:2,valence:"setback",year:1934,sys:[5],title:"Federal mortgage redlining",
     detail:"New Deal housing agencies graded neighborhoods for mortgage risk and marked Black ones “hazardous,” in red — the Home Owners’ Loan Corporation maps and the new FHA’s underwriting rules steered federally backed loans toward white areas and away from Black ones, hardening segregation and the wealth gap that followed.",
     src:"Richard Rothstein, The Color of Law (2017); Mapping Inequality, University of Richmond",
@@ -472,6 +527,18 @@ const EVENTS = [
 {era:3,valence:"advance",year:1957,sys:[3],title:"Civil Rights Act of 1957",
     detail:"The first federal civil-rights law since Reconstruction. Though weakened in the Senate, it created the U.S. Commission on Civil Rights and a Civil Rights Division at the Justice Department — the federal machinery later used to enforce voting rights.",
     src:"Civil Rights Act of 1957; U.S. Senate"},
+  {era:3,valence:"advance",year:1957,sys:[2],title:"The Little Rock Nine",
+    detail:"Nine Black students integrated Central High School in Little Rock, Arkansas, after President Eisenhower sent federal troops to enforce Brown over the governor's defiance. The next year, in Cooper v. Aaron, the Court ruled unanimously that states could not nullify its desegregation rulings.",
+    src:"Cooper v. Aaron, 358 U.S. 1 (1958); U.S. National Park Service"},
+  {era:3,valence:"advance",year:1960,sys:[9],title:"Sit-ins & the founding of SNCC",
+    detail:"After Black college students sat in at a segregated Greensboro lunch counter, the tactic spread across the South and gave rise to the Student Nonviolent Coordinating Committee. SNCC put young people at the movement's center — leading sit-ins, Freedom Rides, and voter registration drives.",
+    src:"SNCC Digital Gateway (Duke University); National Museum of African American History & Culture"},
+  {era:3,valence:"advance",year:1963,sys:[9],title:"March on Washington",
+    detail:"Some 250,000 people gathered at the Lincoln Memorial for jobs and freedom, where Dr. King delivered the “I Have a Dream” speech. The largest demonstration the capital had seen helped build momentum for the Civil Rights Act of 1964 and the Voting Rights Act of 1965.",
+    src:"U.S. National Archives; National Museum of African American History & Culture"},
+  {era:3,valence:"setback",year:1961,sys:[11],title:"The “Mississippi appendectomy”",
+    detail:"Coerced and often secret sterilizations of Black women were so routine in the segregated South that they earned a grim nickname. Fannie Lou Hamer — later a voting-rights leader — was sterilized without her consent during surgery in 1961, one of countless women denied the choice to bear children.",
+    src:"Harriet A. Washington, Medical Apartheid (2007); Fannie Lou Hamer testimony"},
   {era:3,valence:"advance",year:1964,sys:[2],title:"Civil Rights Act of 1964",
     detail:"Outlawed segregation in public accommodations and banned discrimination in employment and federally funded programs \u2014 the most sweeping civil-rights legislation since Reconstruction.",
     src:"National Archives, Milestone Documents: Civil Rights Act",url:"https://www.archives.gov/milestone-documents/civil-rights-act"},
@@ -535,6 +602,27 @@ const EVENTS = [
 {era:4,valence:"achievement",year:2002,sys:[10],title:"Halle Berry — first Black woman Best Actress",
     detail:"Berry became the first Black woman to win the Academy Award for Best Actress, for Monster's Ball — the only one to date.",
     src:"Academy of Motion Picture Arts & Sciences"},
+  {era:4,valence:"achievement",year:1973,sys:[10],title:"The birth of hip-hop",
+    detail:"At a back-to-school party in the Bronx, DJ Kool Herc extended the percussive breaks of records for dancers — the spark of hip-hop. Born of Black and Latino youth in a disinvested city, it grew into one of the most influential cultural movements of the next half-century.",
+    src:"Smithsonian; National Museum of African American History & Culture"},
+  {era:4,valence:"setback",year:1974,sys:[2],title:"Milliken v. Bradley",court:true,
+    detail:"The Supreme Court blocked busing across city-suburb lines to desegregate Detroit's schools, shielding mostly white suburbs from remedies for urban segregation. The 5–4 ruling effectively capped school integration in the North and helped entrench the segregated schools that persist today.",
+    src:"Milliken v. Bradley, 418 U.S. 717 (1974) — Justia"},
+  {era:4,valence:"setback",year:1987,sys:[7],title:"McCleskey v. Kemp",court:true,
+    detail:"Shown statistical evidence that Georgia's death penalty fell far more often on those who killed white victims, the Supreme Court ruled 5–4 that such disparities did not violate the Constitution without proof of intent in the individual case — leaving systemic racial bias in capital sentencing largely beyond challenge.",
+    src:"McCleskey v. Kemp, 481 U.S. 279 (1987) — Justia"},
+  {era:4,valence:"setback",year:1973,sys:[11],title:"Relf v. Weinberger",court:true,
+    detail:"After two Black sisters, aged 12 and 14, were sterilized in Alabama under a federally funded program, a lawsuit revealed that as many as 100,000 to 150,000 poor women — disproportionately Black — were being sterilized each year with federal money, often without informed consent. The case forced new consent rules.",
+    src:"Relf v. Weinberger, 372 F. Supp. 1196 (D.D.C. 1974); Southern Poverty Law Center"},
+  {era:4,valence:"advance",year:1974,sys:[11],title:"Research-ethics reform after Tuskegee",
+    detail:"The exposure of the Tuskegee study forced a reckoning. The National Research Act of 1974 and the Belmont Report that followed established informed consent, ethics review boards, and protections for human research subjects — the corrective that the prior two centuries had so brutally lacked.",
+    src:"National Research Act (1974); Belmont Report (1979); U.S. Department of Health & Human Services"},
+  {era:4,valence:"setback",year:2016,sys:[11],title:"Persistent bias in pain treatment",
+    detail:"A study found that a substantial share of white medical students and residents still held false beliefs about biological differences between Black and white bodies — for instance, that Black people feel less pain — and that those beliefs tracked with under-treating Black patients' pain. The pseudo-science of the 1800s had not fully died.",
+    src:"Kelly M. Hoffman et al., Proceedings of the National Academy of Sciences (2016)"},
+  {era:4,valence:"setback",year:2020,sys:[11],title:"The Black maternal mortality gap",
+    detail:"Black women in the U.S. die from pregnancy-related causes at roughly three times the rate of white women — a gap that persists across income and education levels and that researchers attribute in part to bias in how Black patients' symptoms are heard and treated. The thread reaches into the present.",
+    src:"U.S. Centers for Disease Control and Prevention"},
   {era:4,valence:"achievement",year:2008,sys:[9],title:"Barack Obama elected President",
     detail:"Obama became the first Black President of the United States, winning 365 electoral votes \u2014 a milestone many had thought impossible within their lifetimes. He was awarded the Nobel Peace Prize the next year.",
     src:"The White House; Britannica, \u201cBarack Obama\u201d"},
@@ -707,7 +795,7 @@ function showEraDetail(i){const e=ERAS[i];
     detail:e.detail,src:e.src,url:e.url,color:e.color});}
 function showSysDetail(s){const idx=SYSTEMS.indexOf(s);const n=EVENTS.filter(e=>e.sys.includes(idx)).length;
   showDetail({kind:(s.pos?"Throughline \u00b7 thread":"System of control \u00b7 thread"),title:s.title,year:s.start+'\u2013'+s.end+'  \u00b7  '+n+' moments',
-    detail:s.detail,src:s.src,url:s.url,note:s.note,color:s.pos?'var(--gain)':'var(--brass)'}, true);}
+    detail:s.detail,src:s.src,url:s.url,note:s.note,color:s.pos?'var(--gain)':'var(--brass)'});}
 
 /* ---- era bar ---- */
 ERAS.forEach((e,i)=>{
@@ -794,7 +882,7 @@ function render(){
   // Threads available in the timeframe (or just the active one)
   let sysToShow;
   if(activeSys!==null){ sysToShow=[SYSTEMS[activeSys]]; }
-  else { sysToShow=SYSTEMS.filter(function(s){return scopeEras.some(function(e){return overlaps(s.start,s.end,ERAS[e].start,ERAS[e].end);});}); }
+  else { sysToShow=SYSTEMS.filter(function(s){var si=SYSTEMS.indexOf(s); return EVENTS.some(function(e){return inScope(e.era) && e.sys.includes(si);});}); }
   renderSystems(sysToShow, activeSys);
   document.getElementById('sysCnt').textContent = activeSys!==null ? '· click to close' : ('· '+sysToShow.length);
 
@@ -850,6 +938,7 @@ function toggleEra(i){
   showEraDetail(i);
 }
 function onSystemClick(idx){
+  closeSheet();
   if(activeSys===idx){ activeSys=null; render(); showScopeDetail(); }
   else { activeSys=idx; render(); showSysDetail(SYSTEMS[idx]); }
 }
