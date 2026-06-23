@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Long Arc — Black Americans and the Struggle for Equality, 1619–2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14110F; --ink-2:#1E1A17; --ink-3:#2A2421;
+    --paper:#EDE6DA; --paper-dim:#9A9088; --line:#3A332E;
+    --gain:#5BA888; --control:#B5483D; --brass:#C99445; --achieve:#A98BD0;
+    --sys:#7A3A33; --sys-2:#8E342B;
+    --era-slavery:#8E342B; --era-recon:#4E8E6C; --era-jimcrow:#9A6A2E;
+    --era-civil:#6FB58F; --era-present:#6E6258;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--ink);color:var(--paper)}
+  body{font-family:"Newsreader",Georgia,serif;font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1240px;margin:0 auto;padding:46px 26px 90px}
+  a{color:var(--brass)}
+
+  .eyebrow{font-family:"Spline Sans Mono",monospace;font-size:12px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--brass);margin:0 0 18px}
+  h1{font-family:"Fraunces",serif;font-weight:900;font-size:clamp(2.1rem,5vw,3.4rem);
+    line-height:1.03;letter-spacing:-.015em;margin:0 0 20px;max-width:19ch}
+  h1 em{font-style:italic;font-weight:400;color:var(--brass)}
+  .lede{font-size:1.16rem;color:var(--paper);max-width:66ch;margin:0}
+  .lede .dim{color:var(--paper-dim)}
+
+  .barlabel{font-family:"Spline Sans Mono",monospace;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--paper-dim);margin:34px 0 10px}
+  .erabar{display:flex;gap:5px;width:100%}
+  .eraseg{flex-shrink:0;border:none;border-radius:8px;cursor:pointer;color:#fff;
+    padding:14px 13px 16px;text-align:left;overflow:hidden;position:relative;
+    transition:transform .12s,filter .12s,box-shadow .12s;filter:saturate(.85) brightness(.82)}
+  .eraseg:hover{filter:saturate(1) brightness(1)}
+  .eraseg[aria-selected="true"]{filter:saturate(1.05) brightness(1.05);
+    box-shadow:0 0 0 2px var(--paper) inset, 0 6px 20px rgba(0,0,0,.35);transform:translateY(-2px)}
+  .eraseg:focus-visible{outline:2px solid var(--paper);outline-offset:2px}
+  .eraseg .en{font-family:"Fraunces",serif;font-weight:600;font-size:14px;line-height:1.12;
+    text-shadow:0 1px 3px rgba(0,0,0,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+  .eraseg .ey{font-family:"Spline Sans Mono",monospace;font-size:10.5px;opacity:.92;
+    margin-top:9px;letter-spacing:.02em;white-space:nowrap;display:block}
+  .eraseg .ed{font-family:"Spline Sans Mono",monospace;font-size:9px;opacity:.62;
+    margin-top:5px;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap;display:block}
+
+  .keyline{font-family:"Spline Sans Mono",monospace;font-size:11.5px;color:var(--paper-dim);
+    display:flex;flex-wrap:wrap;gap:14px 18px;margin:16px 0 0}
+  .keyline span{display:inline-flex;align-items:center;gap:7px}
+  .k-dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .k-dia{width:10px;height:10px;flex:none;transform:rotate(45deg);border-radius:2px}
+
+  .explorer{display:grid;grid-template-columns:1fr 384px;gap:30px;margin-top:30px;align-items:start}
+  .main{min-width:0}
+  .side{position:sticky;top:18px}
+
+  /* lens banner */
+  .lens{display:none;align-items:center;gap:13px;background:var(--ink-2);
+    border:1px solid var(--brass);border-left:4px solid var(--brass);border-radius:11px;
+    padding:12px 15px;margin-bottom:20px}
+  .lens.on{display:flex}
+  .lens .lx{font-size:1.3rem;line-height:1;color:var(--brass);flex:none}
+  .lens .lt{font-family:"Newsreader",serif;font-size:1rem;color:var(--paper);line-height:1.3}
+  .lens .lt b{font-family:"Fraunces",serif;color:var(--brass);font-weight:600}
+  .lens .clear{margin-left:auto;flex:none;font-family:"Spline Sans Mono",monospace;font-size:11px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--paper-dim);background:none;
+    border:1px solid var(--line);border-radius:7px;padding:7px 11px;cursor:pointer;transition:.14s}
+  .lens .clear:hover{color:var(--paper);border-color:var(--paper-dim)}
+
+  .sect{margin-bottom:28px}
+  .secthead{font-family:"Spline Sans Mono",monospace;font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--brass);margin:0 0 12px;display:flex;align-items:baseline;gap:9px}
+  .secthead .cnt{color:var(--paper-dim);font-size:10.5px;letter-spacing:.1em}
+  .hint{font-family:"Spline Sans Mono",monospace;font-size:10.5px;color:var(--paper-dim);
+    letter-spacing:.04em;margin:-6px 0 11px}
+
+  .syscard{display:block;width:100%;text-align:left;background:var(--ink-2);border:1px solid var(--line);
+    border-left:3px solid var(--sys-2);border-radius:10px;padding:12px 15px;margin-bottom:8px;cursor:pointer;
+    transition:background .14s,border-color .14s,box-shadow .14s}
+  .syscard:hover{background:var(--ink-3);border-left-color:var(--control)}
+  .syscard:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+  .syscard.active{border-color:var(--brass);border-left-color:var(--brass);background:var(--ink-3);
+    box-shadow:0 0 0 1px var(--brass) inset}
+  .syscard.pos{border-left-color:var(--gain)}
+  .syscard.pos:hover{border-left-color:var(--gain)}
+  .syscard.pos.active{border-color:var(--gain);border-left-color:var(--gain);box-shadow:0 0 0 1px var(--gain) inset}
+  .syscard.pos .chev,.syscard.pos.active .chev{color:var(--gain)}
+  .syscard .st{font-family:"Fraunces",serif;font-weight:600;font-size:1.05rem;color:var(--paper);
+    display:flex;align-items:center;gap:8px}
+  .syscard .sy{font-family:"Spline Sans Mono",monospace;font-size:11px;color:var(--paper-dim);margin-top:2px}
+  .syscard .chev{margin-left:auto;color:var(--paper-dim);font-size:12px;font-family:"Spline Sans Mono",monospace}
+  .syscard.active .chev{color:var(--brass)}
+
+  .evrow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:none;
+    border-bottom:1px solid var(--line);padding:10px 4px;cursor:pointer;transition:background .12s}
+  .evrow:hover{background:var(--ink-2)}
+  .evrow:focus-visible{outline:2px solid var(--brass);outline-offset:-2px}
+  .evrow .ey{font-family:"Spline Sans Mono",monospace;font-size:12px;color:var(--paper-dim);width:42px;flex:none}
+  .evrow .dot{width:12px;height:12px;border-radius:50%;flex:none;border:2px solid var(--ink)}
+  .evrow .dot.court{transform:rotate(45deg);border-radius:2px}
+  .evrow .et{font-family:"Newsreader",serif;font-size:1.02rem;color:var(--paper)}
+  .evrow:hover .et{color:#fff}
+  .evrow .epill{margin-left:auto;flex:none;font-family:"Spline Sans Mono",monospace;font-size:9.5px;
+    letter-spacing:.05em;text-transform:uppercase;color:var(--paper-dim);
+    border:1px solid var(--line);border-radius:20px;padding:2px 9px}
+
+  .heroes{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px}
+  .herocard{text-align:left;background:var(--ink-2);border:1px solid var(--line);border-radius:10px;
+    padding:11px 13px;cursor:pointer;transition:background .14s,border-color .14s}
+  .herocard:hover{background:var(--ink-3);border-color:var(--brass)}
+  .herocard:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+  .herocard .hn{font-family:"Fraunces",serif;font-weight:600;font-size:1.02rem;color:var(--paper);line-height:1.12}
+  .herocard .hr{font-family:"Spline Sans Mono",monospace;font-size:10.5px;color:var(--paper-dim);
+    margin-top:5px;line-height:1.3}
+
+  .detail{border:1px solid var(--line);border-radius:14px;background:var(--ink-2);padding:24px 24px;transition:border-color .2s}
+  .detail .dkind{font-family:"Spline Sans Mono",monospace;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;margin:0 0 9px}
+  .detail h3{font-family:"Fraunces",serif;font-weight:600;font-size:1.5rem;margin:0 0 4px;line-height:1.08}
+  .detail .dyr{font-family:"Spline Sans Mono",monospace;color:var(--paper-dim);font-size:12.5px;margin:0 0 14px}
+  .detail p.dtext{margin:0 0 14px;font-size:1.04rem}
+  .detail .dnote{margin:0 0 14px;font-size:.9rem;color:var(--paper-dim);
+    border-left:2px solid var(--brass);padding-left:12px;font-style:italic}
+  .detail .dlink{font-family:"Spline Sans Mono",monospace;font-size:11px;letter-spacing:.04em;
+    margin:0 0 14px}
+  .detail .dlink button{background:none;border:none;color:var(--brass);cursor:pointer;padding:0;
+    font:inherit;text-decoration:underline;text-underline-offset:3px}
+  .detail .dsrc{font-family:"Spline Sans Mono",monospace;font-size:11.5px;color:var(--paper-dim);
+    border-top:1px solid var(--line);padding-top:12px;margin:0;line-height:1.5}
+  .detail .dsrc a{color:var(--brass);word-break:break-word}
+
+  footer{margin-top:50px;border-top:1px solid var(--line);padding-top:22px;color:var(--paper-dim);
+    font-size:14px;max-width:80ch}
+  footer h4{font-family:"Spline Sans Mono",monospace;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--brass);margin:20px 0 8px}
+  footer .mono{font-family:"Spline Sans Mono",monospace;font-size:12px}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  @media (max-width:820px){
+    .explorer{grid-template-columns:1fr}
+    .side{position:static}
+    .erabar{flex-wrap:wrap}
+    .eraseg{flex:1 1 140px}
+  }
+  @media (max-width:640px){.wrap{padding:32px 16px 70px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">A documentary explorer · 1619–2026 · every entry sourced</p>
+  <h1>The long arc bends <em>slowly</em>, and not on its own.</h1>
+  <p class="lede">Pick an era to open it. Inside, click any <span class="dim">thread</span> to follow it across <em>all</em> eras — systems of control like slavery, disenfranchisement, and housing, but also the countercurrents of Black political power and achievement. Watch each one built, contested, stripped away, and rebuilt. Click any law, ruling, or person for the full account and its source.</p>
+
+  <p class="barlabel">① Choose an era — width shows its length in years</p>
+  <div class="erabar" id="erabar" role="tablist" aria-label="Historical eras"></div>
+
+  <div class="keyline">
+    <span><span class="k-dot" style="background:var(--gain)"></span>advance</span>
+    <span><span class="k-dot" style="background:var(--control)"></span>setback</span>
+    <span><span class="k-dot" style="background:var(--brass)"></span>compromise</span>
+    <span><span class="k-dot" style="background:var(--achieve)"></span>achievement</span>
+    <span><span class="k-dia" style="background:var(--paper-dim)"></span>Supreme Court ruling</span>
+  </div>
+
+  <div class="explorer">
+    <div class="main">
+      <div class="lens" id="lens">
+        <span class="lx" id="lensIcon">⛓</span>
+        <span class="lt" id="lensText"></span>
+        <button class="clear" id="lensClear">✕ clear thread</button>
+      </div>
+
+      <div class="sect">
+        <div class="secthead">② Threads — trace any across time <span class="cnt" id="sysCnt"></span></div>
+        <div class="hint" id="sysHint">Click any thread to follow it across every era. <span style="color:var(--control)">Red</span> = a system of control; <span style="color:var(--gain)">green</span> = a countercurrent of Black power &amp; achievement.</div>
+        <div id="systemsList"></div>
+      </div>
+      <div class="sect">
+        <div class="secthead" id="evHead">③ Laws, rulings, milestones &amp; achievements <span class="cnt" id="evCnt"></span></div>
+        <div id="eventsList"></div>
+      </div>
+      <div class="sect" id="heroSect">
+        <div class="secthead">People who fought &amp; achieved <span class="cnt" id="heroCnt"></span></div>
+        <div class="hint">Never filtered. Whichever thread you trace, the people remain.</div>
+        <div class="heroes" id="heroesList"></div>
+      </div>
+    </div>
+    <div class="side">
+      <div class="detail" id="detail"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Read it as a funnel. The era names the period; the threads name the forces that ran through it. Most trace the machinery of racial control — slavery giving way to convict leasing and Jim Crow, then to mass incarceration. Two trace the countercurrents: the rise of Black political power and the building of Black institutions and culture — the wins that were won, stripped away in 1877, and won again. Open any thread and the relationships surface: the 13th Amendment’s “except as a punishment for crime” clause links emancipation to convict leasing and on to mass incarceration; the franchise runs from the 15th Amendment to <em>Shelby County</em> and <em>Callais</em>; and Black political power crests in Reconstruction, collapses, and returns through Marshall, Chisholm, Wilder, Obama, and Jackson. The story is not a steady climb.</p>
+    <h4>On sources &amp; method</h4>
+    <p>Every entry carries a source, favoring primary and archival material: the National Archives for statutes and amendments; the Supreme Court, Oyez, and Justia for rulings (with reporter citations); and institutionally published scholarship for the systems — EJI on racial terror, Rothstein on housing, Katznelson on the New Deal and GI Bill, Blackmon on convict leasing, Alexander on mass incarceration, the Brennan Center on voter suppression. Two threads are flagged where scholars genuinely disagree: the Tulsa death toll, and the causal weight of redlining maps. The "coded politics" system carries a note that reading specific modern phrases as racial code is itself an interpretive, contested lens — its anchor is the primary 1981 Atwater interview and Ian Haney López's scholarship.</p>
+    <p class="mono" style="margin-top:14px">Editable in the ERAS / SYSTEMS / EVENTS / HEROES arrays at the top of the script. Each event’s <b>sys</b> field lists the threads it belongs to.</p>
+    <h4>Use &amp; license</h4>
+    <p>This page is offered free of charge for teaching, organizing, and justice work. You are welcome to copy it, host it, embed it, adapt it, translate it, and build on it — no permission or payment required. It is a single self-contained file: open it in any browser, or drag it onto a static host (Netlify, Cloudflare Pages, GitHub Pages) to publish it. Attribution and corrections are appreciated but not required. The history belongs to everyone; this is only a way of looking at it.</p>
+  </footer>
+</div>
+
+<script>
+/* ===================== DATA ===================== */
+const ERAS = [
+  {start:1619,end:1865,title:"Enslavement",color:"var(--era-slavery)",
+    detail:"From the first documented enslaved Africans at Point Comfort, Virginia in August 1619 to the 13th Amendment in December 1865 — 246 years in which chattel slavery was legal and, in the South, foundational to the economy.",
+    src:"National Archives, \u201c1619\u201d / EJI, Slavery in America",url:"https://eji.org/racial-justice/"},
+  {start:1865,end:1877,title:"Reconstruction",color:"var(--era-recon)",
+    detail:"A roughly twelve-year window in which Black men voted, held office, and gained federal protection under the Reconstruction Amendments. Eric Foner calls it \u201cAmerica\u2019s unfinished revolution\u201d \u2014 deliberately dismantled by 1877.",
+    src:"Eric Foner, Reconstruction: America\u2019s Unfinished Revolution (1988)"},
+  {start:1877,end:1954,title:"Jim Crow \u00b7 The Nadir",color:"var(--era-jimcrow)",
+    detail:"Historians call the decades around 1900 the \u201cnadir\u201d of American race relations: legally mandated segregation, mass disenfranchisement, and racial-terror violence replaced slavery as the system of control.",
+    src:"Rayford Logan, The Negro in American Life and Thought: The Nadir (1954)"},
+  {start:1954,end:1968,title:"Civil Rights Movement",color:"var(--era-civil)",
+    detail:"From Brown v. Board (1954) through the Fair Housing Act (1968), mass organizing and federal action dismantled the formal legal architecture of Jim Crow \u2014 the de jure segregation written into law.",
+    src:"Library of Congress, \u201cThe Civil Rights Act of 1964: A Long Struggle for Freedom\u201d",url:"https://www.loc.gov/exhibits/civil-rights-act/civil-rights-era.html"},
+  {start:1968,end:2026,title:"Post\u2013Civil Rights Era",color:"var(--era-present)",
+    detail:"Formal legal equality now coexists with new mechanisms: mass incarceration, a racial wealth gap rooted in 20th-century housing policy, coded political appeals, and the 2013\u20132026 dismantling of federal voting protections \u2014 alongside historic breakthroughs in politics, science, and culture.",
+    src:"Michelle Alexander, The New Jim Crow (2010)"},
+];
+
+/* system index = position in this array */
+const SYSTEMS = [
+  /*0*/{start:1619,end:1865,title:"Chattel slavery",
+    detail:"Human beings held as inheritable property \u2014 the foundational system of racial control in colonial and antebellum America, made hereditary through the mother by Virginia\u2019s 1662 law and codified across the colonies.",
+    src:"Equal Justice Initiative, \u201cSlavery in America\u201d",url:"https://eji.org/racial-justice/"},
+  /*1*/{start:1865,end:1928,title:"Black Codes & convict leasing",
+    detail:"After emancipation, Southern states criminalized ordinary Black life (vagrancy, \u201cidleness\u201d) and leased the resulting prisoners \u2014 overwhelmingly Black \u2014 to mines, mills, and plantations. Douglas Blackmon called it \u201cslavery by another name.\u201d",
+    src:"Douglas A. Blackmon, Slavery by Another Name (2008; Pulitzer 2009) / PBS",url:"https://www.pbs.org/tpt/slavery-by-another-name/themes/convict-leasing/"},
+  /*2*/{start:1877,end:1965,title:"Jim Crow segregation",
+    detail:"A legally mandated caste system separating Black Americans in schools, transit, jobs, and public life, given constitutional cover by Plessy v. Ferguson (1896) and not dismantled in law until the 1960s.",
+    src:"National Museum of African American History & Culture, \u201cJim Crow\u201d"},
+  /*3*/{start:1787,end:2026,title:"The franchise & disenfranchisement",
+    detail:"The contested right to vote and hold office. It opens in distortion — the Three-Fifths Clause counting the enslaved to swell slaveholder power — then is guaranteed by the 14th and 15th Amendments, stripped across the South by poll taxes, literacy tests, white primaries, and terror, restored by the 1965 Voting Rights Act, and narrowed again by Shelby County (2013) and Callais (2026).",
+    src:"National Archives, \u201cLaws and Court Cases\u201d (Black Americans and the Vote)",url:"https://www.archives.gov/research/african-americans/vote/laws-and-courts"},
+  /*4*/{start:1865,end:1950,title:"Racial terror & lynching",
+    detail:"The Equal Justice Initiative has documented roughly 6,500 racial-terror lynchings of Black Americans between 1865 and 1950 \u2014 public, largely unpunished killings used to enforce the racial order.",
+    src:"Equal Justice Initiative, Lynching in America (2017) & Reconstruction in America (2020)",url:"https://lynchinginamerica.eji.org/report/"},
+  /*5*/{start:1865,end:1968,title:"Land, housing & wealth extraction",
+    detail:"From the reversal of the \u201c40 acres\u201d land grants in 1865 through 20th-century redlining, federal and private policy stripped Black families of the chance to build and keep wealth: mortgage programs graded Black neighborhoods unlendable, and predatory \u201ccontract\u201d sales drained equity from buyers denied normal loans \u2014 a central engine of today\u2019s racial wealth gap.",
+    src:"Richard Rothstein, The Color of Law (2017) / NCRC",url:"https://ncrc.org/holc/",
+    note:"Scholarly debate on the redlining era: Rothstein attributes major impact to the HOLC maps; recent economic research (Fishback et al., Chicago Fed, 2022) argues FHA underwriting drove exclusion more than the maps. The consensus that federal policy entrenched segregation is not disputed."},
+  /*6*/{start:1956,end:2026,title:"Coded politics & dog whistles",
+    detail:"As open racism became unsayable, strategists substituted race-neutral language \u2014 \u201cstates\u2019 rights,\u201d \u201cforced busing,\u201d \u201claw and order,\u201d \u201cwelfare queen,\u201d \u201ctough on crime\u201d \u2014 to appeal to racial resentment while preserving deniability. In a 1981 interview, GOP strategist Lee Atwater described the shift in his own words.",
+    src:"Lee Atwater interview, The Nation (recording released 2012) / Ian Haney L\u00f3pez, Dog Whistle Politics (2014)",url:"https://www.thenation.com/article/archive/exclusive-lee-atwaters-infamous-1981-interview-southern-strategy/",
+    note:"Interpretive and contested: the documented mechanism (Atwater\u2019s own account) is primary evidence, but attributing specific contemporary policies or phrases to coded racial intent is an analytical lens that scholars and commentators dispute."},
+  /*7*/{start:1971,end:2026,title:"Mass incarceration",
+    detail:"After the War on Drugs was declared in 1971, the U.S. incarcerated population grew roughly sevenfold, from about 300,000 to over 2 million, falling far harder on Black Americans \u2014 what Michelle Alexander calls a new system of racialized control, rooted in the 13th Amendment\u2019s punishment clause.",
+    src:"Michelle Alexander, The New Jim Crow (2010)",url:"https://prospect.org/special-report/new-jim-crow/"},
+  /*8*/{start:2013,end:2026,title:"Voter suppression, post-Shelby",
+    detail:"After Shelby County (2013) ended federal preclearance, nearly 100 restrictive voting laws passed and roughly 1,000 polling places closed, many in Black-majority counties; the racial turnout gap widened fastest in once-covered jurisdictions. Brnovich (2021) and Louisiana v. Callais (2026) then narrowed Section 2 itself.",
+    src:"Brennan Center for Justice, \u201cEffects of Shelby County v. Holder\u201d",url:"https://www.brennancenter.org/our-work/research-reports/effects-shelby-county-v-holder-voting-rights-act",
+    note:"Contested framing: supporters describe these laws as election-integrity and fraud-prevention measures. The data on closures and the widening turnout gap is documented; whether the laws\u2019 intent or net effect is suppressive is politically disputed."},
+  /*9*/{start:1865,end:2026,title:"Black political power & representation",pos:true,
+    detail:"The countercurrent to disenfranchisement: Black Americans winning office and a voice in government. It crests in Reconstruction — some 2,000 officeholders and a Black-majority legislature in South Carolina — is stripped away by 1877, rebuilt across the 20th century, and reaches the Supreme Court, the Senate, and the White House. The arc of wins won, lost, and won again.",
+    src:"Eric Foner, Freedom's Lawmakers (1996); U.S. Senate; U.S. House of Representatives"},
+  /*10*/{start:1773,end:2026,title:"Black excellence, culture & institutions",pos:true,
+    detail:"The building of Black institutions and the breaking of barriers in culture, science, and the academy — from Phillis Wheatley’s poetry under slavery and the schools of the Sea Islands, through the first HBCUs, Nobel Prizes, Pulitzers, Oscars, and spaceflight. Achievement pursued and won in the teeth of every system on this list.",
+    src:"U.S. National Park Service; The Nobel Prize; The Pulitzer Prizes; NASA"},
+];
+
+/* valence: advance|setback|compromise|achievement ; court:true => diamond ; sys:[system indices] */
+const EVENTS = [
+  /* e0 Enslavement */
+  {era:0,valence:"setback",year:1662,sys:[0],title:"Slavery made hereditary",
+    detail:"Virginia decreed that a child\u2019s status \u201cfollows the condition of the mother\u201d (partus sequitur ventrem), breaking with English common law to make slavery inheritable, lifelong, and self-perpetuating. Ibram X. Kendi analyzes the law in Stamped from the Beginning.",
+    src:"Virginia Act XII (1662); Ibram X. Kendi, Stamped from the Beginning (2016)",url:"https://www.thebaltimorestory.org/history-1/1662-racial-chattel-slavery-permanent-and-inheritable"},
+  {era:0,valence:"advance",year:1688,sys:[0],title:"Germantown Petition",
+    detail:"Four Quakers in Germantown, Pennsylvania signed the first formal protest against slavery in the American colonies.",
+    src:"American Battlefield Trust, \u201cSlavery in Colonial America\u201d",url:"https://www.battlefields.org/learn/articles/slavery-colonial-america"},
+  {era:0,valence:"setback",year:1705,sys:[0],title:"Virginia Slave Codes",
+    detail:"\u201cAn act concerning Servants and Slaves\u201d defined enslaved people as real estate, banned interracial marriage, and shielded masters who killed slaves while \u201ccorrecting\u201d them. Other colonies copied it.",
+    src:"Virginia Slave Codes of 1705",url:"https://slaverylawpower.org/chapters/tory-reactions/virginia-slave-code-1705/"},
+  {era:0,valence:"achievement",year:1773,sys:[10],title:"Phillis Wheatley publishes her Poems",
+    detail:"Enslaved in Boston, Wheatley became the first African American — and one of the first American women — to publish a book of poetry: Poems on Various Subjects, Religious and Moral, printed in London. Her work was held up to refute the era's claim that Black people lacked full intellectual and creative capacity.",
+    src:"Library of Congress; Poetry Foundation"},
+  {era:0,valence:"advance",year:1780,sys:[0],title:"Northern abolition begins",
+    detail:"Pennsylvania\u2019s gradual-abolition act freed no one immediately \u2014 it freed the future children of the enslaved at age 28 \u2014 but it was the first such law in the new nation, and most Northern states followed.",
+    src:"An Act for the Gradual Abolition of Slavery, Pennsylvania (1780)"},
+  {era:0,valence:"setback",year:1787,sys:[0,3],title:"The Three-Fifths Clause",
+    detail:"The Constitution counted each enslaved person as three-fifths of a free person for apportioning seats in Congress and direct taxes — giving slaveholding states political power built on people who had no rights and no vote, and writing the denial of Black personhood into the founding document. It stood until the 14th Amendment repealed it in 1868.",
+    src:"U.S. Constitution, Article I, Section 2; National Archives"},
+  {era:0,valence:"advance",year:1787,sys:[0],title:"Northwest Ordinance",
+    detail:"Congress barred slavery in the territory north of the Ohio River, establishing a free-soil Midwest even as slavery expanded in the South.",
+    src:"National Archives, Milestone Documents: Northwest Ordinance",url:"https://www.archives.gov/milestone-documents/northwest-ordinance"},
+  {era:0,valence:"setback",year:1793,sys:[0],title:"Fugitive Slave Act of 1793",
+    detail:"Let enslavers cross state lines to seize people who had escaped and penalized anyone who helped them, extending slaveholders\u2019 reach into free states.",
+    src:"Fugitive Slave Act of 1793, 1 Stat. 302"},
+  {era:0,valence:"advance",year:1808,sys:[0],title:"Slave trade abolished",
+    detail:"As soon as the Constitution allowed, Congress banned importing enslaved people from abroad \u2014 but the domestic trade expanded, with roughly a million people sold from the Upper to the Deep South in the decades that followed.",
+    src:"Act Prohibiting Importation of Slaves (1807, effective Jan. 1, 1808)"},
+  {era:0,valence:"compromise",year:1820,sys:[0],title:"Missouri Compromise",
+    detail:"Admitted Missouri as slave and Maine as free, and barred slavery north of the 36\u00b030\u2032 line \u2014 limiting slavery\u2019s spread while entrenching the balance of slave power.",
+    src:"National Archives, Milestone Documents: Missouri Compromise",url:"https://www.archives.gov/milestone-documents/missouri-compromise"},
+  {era:0,valence:"setback",year:1850,sys:[0],title:"Fugitive Slave Act of 1850",
+    detail:"Compelled Northern citizens and officials to help capture alleged escapees and stripped the accused of a jury trial, making slavery\u2019s enforcement a national obligation and radicalizing many Northerners against it.",
+    src:"Fugitive Slave Act of 1850 (Compromise of 1850)"},
+  {era:0,valence:"setback",year:1854,sys:[0],title:"Kansas\u2013Nebraska Act",
+    detail:"Repealed the Missouri Compromise line and let territories vote slavery up or down, igniting the violence of \u201cBleeding Kansas.\u201d",
+    src:"National Archives, Milestone Documents: Kansas-Nebraska Act",url:"https://www.archives.gov/milestone-documents/kansas-nebraska-act"},
+  {era:0,valence:"setback",year:1857,sys:[0,3],title:"Dred Scott",court:true,
+    detail:"Chief Justice Taney\u2019s 7\u20132 opinion held that people of African descent could not be citizens and had no standing to sue, and that Congress could not bar slavery from the territories. Widely judged the Court\u2019s worst decision.",
+    src:"Dred Scott v. Sandford, 60 U.S. 393 (1857) \u2014 National Archives",url:"https://www.archives.gov/milestone-documents/dred-scott-v-sandford"},
+  {era:0,valence:"advance",year:1861,sys:[0],title:"Civil War begins",
+    detail:"Secession over the future of slavery led to a four-year war that ended with slavery abolished and nearly 200,000 Black men having served in Union forces.",
+    src:"Historynet / National Archives, U.S. Colored Troops records",url:"https://www.historynet.com/a-promise-betrayed.htm"},
+{era:0,valence:"advance",year:1862,sys:[5,10],title:"Port Royal Experiment",
+    detail:"When the Union took South Carolina's Sea Islands in 1861, the planters fled and roughly 10,000 enslaved people stayed. Northern teachers opened schools, freedpeople worked the land for wages and bought some of it at tax sales, and the community governed much of its own daily life — a coastal rehearsal for Reconstruction, years before the war's end.",
+    src:"U.S. National Park Service, Reconstruction Era; Willie Lee Rose, Rehearsal for Reconstruction (1964)"},
+  {era:0,valence:"advance",year:1863,sys:[0],title:"Emancipation Proclamation",
+    detail:"Lincoln declared the enslaved in the rebelling states \u201cforever free\u201d and authorized Black enlistment \u2014 transforming the war\u2019s purpose even though it freed no one in loyal slaveholding states.",
+    src:"National Archives, Milestone Documents: Emancipation Proclamation",url:"https://www.archives.gov/milestone-documents/emancipation-proclamation"},
+
+  /* e1 Reconstruction */
+  {era:1,valence:"advance",year:1865,sys:[5],title:"Field Order No. 15 \u2014 \u201c40 acres\u201d",
+    detail:"Sherman set aside ~400,000 acres of seized coastal land \u2014 the Sea Islands from Charleston to Florida \u2014 in 40-acre plots. About 40,000 freedpeople settled it and built self-governing communities within months. The root of \u201c40 acres and a mule.\u201d",
+    src:"New Georgia Encyclopedia, \u201cSherman\u2019s Field Order No. 15\u201d",url:"https://www.georgiaencyclopedia.org/articles/history-archaeology/shermans-field-order-no-15/"},
+  {era:1,valence:"advance",year:1865,sys:[5],title:"Freedmen\u2019s Bureau",
+    detail:"Provided food, hospitals, labor contracts, and \u2014 most enduringly \u2014 schools to formerly enslaved people. Chronically underfunded and politically undercut, it was shut down by Congress in 1872.",
+    src:"BlackPast, \u201cFreedmen\u2019s Bureau\u201d / National Archives",url:"https://blackpast.org/african-american-history/forty-acres-and-mule/"},
+{era:1,valence:"achievement",year:1867,sys:[10],title:"The first HBCUs founded",
+    detail:"Fisk (1866), Howard (1867), and Morehouse (1867) were among the historically Black colleges founded in the war's wake, often with Freedmen's Bureau and church support. They built a Black professional and political class that outlasted Reconstruction itself — an institution that could not be repealed.",
+    src:"Howard University; U.S. National Park Service"},
+  {era:1,valence:"advance",year:1865,sys:[0,1,7],title:"13th Amendment",
+    detail:"Abolished slavery \u2014 \u201cexcept as a punishment for crime.\u201d That exception clause was immediately exploited by the Black Codes and convict leasing, and is the constitutional thread Michelle Alexander traces forward to mass incarceration.",
+    src:"National Archives, Milestone Documents: 13th Amendment",url:"https://www.archives.gov/milestone-documents/13th-amendment"},
+  {era:1,valence:"setback",year:1865,sys:[5],title:"Coastal land restored to planters",
+    detail:"Within months of Field Order 15, President Andrew Johnson pardoned ex-Confederates and ordered the Sea Island land returned, evicting the freed families who had already settled and farmed it. By 1867 nearly all was back in white hands.",
+    src:"\u201cA Promise Betrayed\u201d (Historynet) / BlackPast",url:"https://www.historynet.com/a-promise-betrayed.htm"},
+  {era:1,valence:"setback",year:1865,sys:[1],title:"Mississippi Black Codes",
+    detail:"Mississippi enacted the first Black Codes in November 1865; the South copied them within months. The vagrancy law deemed any freedman without a written labor contract by January a \u201cvagrant\u201d \u2014 jailed, fined, then \u201chired out\u201d to whoever paid the fine; the apprenticeship law bound Black children to work for their former masters. The codes granted narrow rights (to marry, sue, own some property) while re-imposing forced labor.",
+    src:"Mississippi Encyclopedia, \u201cBlack Codes\u201d; American Yawp Reader",url:"https://mississippiencyclopedia.org/entries/black-codes/"},
+  {era:1,valence:"advance",year:1866,sys:[1,2],title:"Civil Rights Act of 1866",
+    detail:"Passed over Andrew Johnson\u2019s veto specifically to override the Black Codes, the first federal civil-rights statute declared all persons born in the U.S. citizens with equal rights to contract, sue, and own property \u2014 and became the basis for Jones v. Mayer a century later.",
+    src:"Civil Rights Act of 1866, 14 Stat. 27"},
+  {era:1,valence:"setback",year:1868,sys:[1],title:"Convict leasing spreads",
+    detail:"Swept up by the new vagrancy and contract laws, Black men were leased by Southern states to mines, railroads, and plantations for profit. Conditions were often deadlier than slavery \u2014 lessees, unlike enslavers, had no financial stake in a worker surviving. Douglas Blackmon documented the system in Slavery by Another Name.",
+    src:"Douglas A. Blackmon, Slavery by Another Name (2008) / PBS",url:"https://www.pbs.org/tpt/slavery-by-another-name/themes/convict-leasing/"},
+  {era:1,valence:"advance",year:1868,sys:[2,3],title:"14th Amendment",
+    detail:"Guaranteed birthright citizenship and \u201cequal protection of the laws\u201d to all persons born in the U.S. \u2014 the constitutional foundation later used to strike down segregation and overturn Dred Scott.",
+    src:"National Archives, Milestone Documents: 14th Amendment",url:"https://www.archives.gov/milestone-documents/14th-amendment"},
+{era:1,valence:"advance",year:1868,sys:[3,9],title:"Black officeholders elected across the South",
+    detail:"During Reconstruction roughly 2,000 Black men held public office, from local sheriffs to the U.S. Congress. South Carolina elected a Black-majority state legislature, and sixteen Black men served in Congress in these years — nearly all of it stripped away as Reconstruction was overthrown.",
+    src:"Eric Foner, Freedom's Lawmakers (1996); U.S. House, 'Black Americans in Congress'"},
+  {era:1,valence:"advance",year:1870,sys:[3],title:"15th Amendment",
+    detail:"Barred denying the vote \u201con account of race.\u201d Within a generation it was nullified in practice across the South by poll taxes, literacy tests, and terror \u2014 not effectively enforced until 1965.",
+    src:"National Archives, Milestone Documents: 15th Amendment",url:"https://www.archives.gov/milestone-documents/15th-amendment"},
+  {era:1,valence:"advance",year:1870,sys:[3,9],title:"Hiram Revels seated",
+    detail:"Mississippi sent Hiram Revels to the U.S. Senate, making him the first Black member of Congress \u2014 admitted only after a bitter debate over whether he was a citizen, five years after Dred Scott was overturned.",
+    src:"U.S. Senate, Featured Biography: Hiram Revels",url:"https://www.senate.gov/senators/FeaturedBios/Featured_Bio_Revels.htm"},
+  {era:1,valence:"advance",year:1875,sys:[2],title:"Civil Rights Act of 1875",
+    detail:"Guaranteed equal access to inns, public transit, and theaters. The Supreme Court struck it down in 1883, holding Congress could not bar discrimination by private businesses \u2014 a gap not closed until 1964.",
+    src:"Civil Rights Act of 1875, 18 Stat. 335"},
+  {era:1,valence:"setback",year:1873,sys:[4],title:"Colfax Massacre",
+    detail:"On Easter Sunday, a white mob overpowered Black freedmen and militia defending the Grant Parish courthouse in Colfax, Louisiana, killing between 62 and 150 \u2014 most after they had surrendered. Historian Eric Foner calls it the worst act of racial violence of Reconstruction.",
+    src:"Equal Justice Initiative; 64 Parishes (Louisiana Endowment for the Humanities)",url:"https://64parishes.org/entry/colfax-massacre"},
+  {era:1,valence:"setback",year:1876,sys:[3,4],title:"United States v. Cruikshank",court:true,
+    detail:"The Supreme Court threw out the only convictions won for the Colfax Massacre, holding that the 14th Amendment restrains states but not private individuals \u2014 gutting the Enforcement Acts and the federal power to prosecute racial terror. After 1876 that responsibility fell to hostile state courts.",
+    src:"United States v. Cruikshank, 92 U.S. 542 (1876) \u2014 Supreme Court Historical Society",url:"https://civics.supremecourthistory.org/article/united-states-v-cruikshank/"},
+  {era:1,valence:"setback",year:1877,sys:[1,3,4],title:"Compromise of 1877",
+    detail:"To settle the disputed 1876 election, federal troops were withdrawn from the South, ending Reconstruction and the protection of Black political rights \u2014 opening the door to disenfranchisement, convict leasing, and racial terror.",
+    src:"Eric Foner, Reconstruction (1988); National Archives"},
+
+  /* e2 Jim Crow / Nadir */
+  {era:2,valence:"setback",year:1883,sys:[2],title:"Civil Rights Cases",court:true,
+    detail:"The Court struck down the Civil Rights Act of 1875, holding the 14th Amendment let Congress bar discrimination only by states, not private businesses \u2014 ending federal civil-rights enforcement for decades.",
+    src:"Civil Rights Cases, 109 U.S. 3 (1883) \u2014 Justia",url:"https://supreme.justia.com/cases/federal/us/109/3/"},
+  {era:2,valence:"setback",year:1896,sys:[2],title:"Plessy v. Ferguson",court:true,
+    detail:"By 7\u20131, the Court upheld segregated railcars, inventing \u201cseparate but equal,\u201d which gave segregation constitutional cover for 58 years. Justice Harlan\u2019s lone dissent insisted the Constitution is \u201ccolor-blind.\u201d",
+    src:"Plessy v. Ferguson, 163 U.S. 537 (1896) \u2014 National Archives",url:"https://www.archives.gov/milestone-documents/plessy-v-ferguson"},
+  {era:2,valence:"setback",year:1921,sys:[4],title:"Tulsa Race Massacre",
+    detail:"Over two days a white mob, some deputized, destroyed the prosperous Greenwood district \u2014 \u201cBlack Wall Street\u201d \u2014 burning ~1,250 homes and leaving up to 10,000 homeless. No one was ever convicted.",
+    src:"Oklahoma Commission to Study the Tulsa Race Riot (2001); Tulsa Historical Society",url:"https://tulsahistory.org/exhibit/1921-tulsa-race-massacre/",
+    note:"Disputed figure: contemporary records logged 36 deaths; the 2001 state commission concluded the true toll may have reached 300. A 2025 U.S. Justice Department review reaffirmed the scale of the violence."},
+  {era:2,valence:"setback",year:1890,sys:[3],title:"Mississippi disenfranchisement plan",
+    detail:"Mississippi\u2019s new constitution pioneered the tools that erased the Black vote across the South \u2014 a poll tax, a literacy test, and an \u201cunderstanding clause\u201d that registrars applied at whim. Black registration collapsed, and other Southern states copied the model into the 1900s.",
+    src:"Mississippi Encyclopedia, \u201cDisenfranchisement\u201d; National Constitution Center"},
+  {era:2,valence:"setback",year:1922,sys:[4],title:"Dyer Anti-Lynching Bill blocked",
+    detail:"The House passed the Dyer bill to make lynching a federal crime, but a Senate filibuster by Southern Democrats killed it. Roughly 200 anti-lynching bills were introduced in the first half of the 20th century; none became law. The Senate formally apologized for that inaction in 2005.",
+    src:"U.S. House of Representatives, History, Art & Archives, \u201cThe Dyer Anti-Lynching Bill\u201d; U.S. Senate"},
+  {era:2,valence:"advance",year:1911,sys:[1],title:"Bailey v. Alabama",court:true,
+    detail:"The Supreme Court struck down Alabama\u2019s peonage law, which let the state jail Black laborers who quit a job after taking a cash advance \u2014 debt slavery in all but name \u2014 as a violation of the 13th Amendment\u2019s ban on involuntary servitude. Enforcement on the ground remained weak for decades.",
+    src:"Bailey v. Alabama, 219 U.S. 219 (1911) \u2014 Justia",url:"https://supreme.justia.com/cases/federal/us/219/219/"},
+  {era:2,valence:"advance",year:1928,sys:[1],title:"Alabama ends convict leasing",
+    detail:"Alabama became the last state to formally abolish convict leasing \u2014 more than sixty years after emancipation. Forced labor persisted in other forms, chiefly chain gangs and peonage, until federal action (Circular 3591) in 1941.",
+    src:"Douglas A. Blackmon, Slavery by Another Name (2008); End Slavery Now",url:"https://www.pbs.org/tpt/slavery-by-another-name/themes/convict-leasing/"},
+  {era:2,valence:"setback",year:1935,sys:[5],title:"New Deal exclusions",
+    detail:"At Southern Democrats\u2019 insistence, the 1935 Social Security Act and key labor laws excluded farm and domestic workers \u2014 roughly two-thirds of Black workers nationally \u2014 walling them out of the era\u2019s new protections.",
+    src:"Ira Katznelson, When Affirmative Action Was White (2005)",url:"https://www.prrac.org/when-affirmative-action-was-white/"},
+  {era:2,valence:"achievement",year:1940,sys:[10],title:"Hattie McDaniel \u2014 first Black Oscar",
+    detail:"McDaniel became the first Black performer to win an Academy Award (Best Supporting Actress) \u2014 though at the segregated ceremony she was seated apart from her colleagues.",
+    src:"Academy of Motion Picture Arts & Sciences"},
+  {era:2,valence:"setback",year:1944,sys:[5],title:"GI Bill, unequally applied",
+    detail:"Universal on paper, the GI Bill was administered locally: Southern banks redlined Black veterans\u2019 mortgages and colleges turned them away, so its postwar wealth-building flowed overwhelmingly to white families.",
+    src:"Ira Katznelson, When Affirmative Action Was White (2005)",url:"https://www.prrac.org/when-affirmative-action-was-white/"},
+  {era:2,valence:"achievement",year:1947,sys:[10],title:"Jackie Robinson breaks the color line",
+    detail:"Robinson became the first Black player in the modern major leagues, enduring sustained abuse to integrate the national pastime \u2014 a milestone that helped catalyze the coming civil rights era.",
+    src:"National Baseball Hall of Fame"},
+  {era:2,valence:"achievement",year:1950,sys:[10],title:"Two firsts: Bunche & Brooks",
+    detail:"Ralph Bunche became the first Black American to win the Nobel Peace Prize (for mediating in the Middle East), and Gwendolyn Brooks became the first Black American to win a Pulitzer Prize (for the poetry collection Annie Allen).",
+    src:"The Nobel Prize; The Pulitzer Prizes"},
+
+  /* e3 Civil Rights */
+  {era:3,valence:"advance",year:1954,sys:[2],title:"Brown v. Board",court:true,
+    detail:"A unanimous Court ruled that \u201cseparate but equal\u201d public schools are inherently unequal and unconstitutional, overturning Plessy\u2019s 58-year-old doctrine and catalyzing the civil rights movement.",
+    src:"National Archives, Milestone Documents: Brown v. Board",url:"https://www.archives.gov/milestone-documents/brown-v-board-of-education"},
+  {era:3,valence:"setback",year:1956,sys:[2,6],title:"Massive Resistance",
+    detail:"101 members of Congress signed the \u201cSouthern Manifesto\u201d denouncing Brown, rallying under \u201cstates\u2019 rights\u201d \u2014 the phrase Lee Atwater would later cite as the template for coded racial appeals. The resistance closed public schools rather than integrate; Prince Edward County, Virginia kept its shut for five years.",
+    src:"U.S. House of Representatives, \u201cThe Southern Manifesto of 1956\u201d",url:"https://history.house.gov/Historical-Highlights/1951-2000/The-Southern-Manifesto-of-1956/"},
+{era:3,valence:"advance",year:1957,sys:[3],title:"Civil Rights Act of 1957",
+    detail:"The first federal civil-rights law since Reconstruction. Though weakened in the Senate, it created the U.S. Commission on Civil Rights and a Civil Rights Division at the Justice Department — the federal machinery later used to enforce voting rights.",
+    src:"Civil Rights Act of 1957; U.S. Senate"},
+  {era:3,valence:"advance",year:1964,sys:[2],title:"Civil Rights Act of 1964",
+    detail:"Outlawed segregation in public accommodations and banned discrimination in employment and federally funded programs \u2014 the most sweeping civil-rights legislation since Reconstruction.",
+    src:"National Archives, Milestone Documents: Civil Rights Act",url:"https://www.archives.gov/milestone-documents/civil-rights-act"},
+  {era:3,valence:"achievement",year:1964,sys:[10],title:"Sidney Poitier \u2014 first Black Best Actor",
+    detail:"Poitier won the Academy Award for Best Actor (Lilies of the Field), the first Black man to do so \u2014 reshaping who could be cast as a lead in American film.",
+    src:"Academy of Motion Picture Arts & Sciences"},
+{era:3,valence:"advance",year:1964,sys:[3],title:"24th Amendment",
+    detail:"Abolished the poll tax in federal elections, one of the oldest tools of disenfranchisement. Two years later, Harper v. Virginia (1966) extended the ban to state elections.",
+    src:"National Archives, Milestone Documents: 24th Amendment"},
+  {era:3,valence:"advance",year:1965,sys:[3],title:"Voting Rights Act",
+    detail:"Banned literacy tests and required \u201cpreclearance\u201d \u2014 federal approval of voting changes in jurisdictions with histories of discrimination. Black registration in the Deep South rose dramatically within years.",
+    src:"National Archives, Milestone Documents: Voting Rights Act",url:"https://www.archives.gov/milestone-documents/voting-rights-act"},
+  {era:3,valence:"advance",year:1967,sys:[2],title:"Loving v. Virginia",court:true,
+    detail:"A unanimous Court struck down every remaining state ban on interracial marriage. Sixteen states still had such laws in 1967.",
+    src:"Loving v. Virginia, 388 U.S. 1 (1967) \u2014 Oyez",url:"https://www.oyez.org/cases/1966/395"},
+  {era:3,valence:"advance",year:1966,sys:[9],title:"Black Panther Party founded",
+    detail:"Huey Newton and Bobby Seale founded the Party in Oakland, pairing armed copwatching with survival programs — free breakfast for children, clinics, and schools. It became the most visible face of Black self-determination, and the foremost target of the FBI's COINTELPRO operation, which set out to discredit and dismantle it.",
+    src:"Encyclopaedia Britannica; Stanford King Institute"},
+{era:3,valence:"achievement",year:1967,sys:[9],title:"Thurgood Marshall joins the Supreme Court",
+    detail:"The lawyer who had won Brown v. Board became the first Black justice of the U.S. Supreme Court — the architect of the legal campaign against segregation, now seated on the Court that had once written Plessy.",
+    src:"Supreme Court of the United States; Britannica"},
+  {era:3,valence:"advance",year:1968,sys:[5],title:"Fair Housing Act",
+    detail:"Passed days after Dr. King\u2019s assassination, it prohibited discrimination in the sale, rental, and financing of housing \u2014 closing, on paper, the era of legal redlining and restrictive covenants.",
+    src:"Fair Housing Act, Title VIII of the Civil Rights Act of 1968"},
+  {era:3,valence:"advance",year:1968,sys:[5],title:"Jones v. Mayer",court:true,
+    detail:"The Court held that an 1866 statute bars racial discrimination in all property sales \u2014 private as well as public \u2014 reviving Reconstruction-era law as a tool against housing bias.",
+    src:"Jones v. Alfred H. Mayer Co., 392 U.S. 409 (1968) \u2014 Justia",url:"https://supreme.justia.com/cases/federal/us/392/409/"},
+
+  /* e4 Post-Civil Rights */
+  {era:4,valence:"setback",year:1971,sys:[6,7],title:"War on Drugs declared",
+    detail:"President Nixon declared drug abuse \u201cpublic enemy number one.\u201d Escalated under later administrations, federal drug enforcement fell disproportionately on Black communities despite similar use rates across races.",
+    src:"Michelle Alexander, The New Jim Crow (2010)",url:"https://prospect.org/special-report/new-jim-crow/"},
+  {era:4,valence:"advance",year:1972,sys:[9],title:"Shirley Chisholm runs for President",
+    detail:"Four years after becoming the first Black woman in Congress, Chisholm became the first Black candidate to seek a major party\u2019s presidential nomination, carrying delegates to the Democratic convention.",
+    src:"National Women\u2019s History Museum; National Archives",url:"https://www.womenshistory.org/education-resources/biographies/shirley-chisholm"},
+  {era:4,valence:"setback",year:1981,sys:[6],title:"Coded-strategy interview",
+    detail:"In a 1981 interview (its audio released in 2012), GOP strategist Lee Atwater described how openly racist appeals had given way to abstract substitutes \u2014 \u201cforced busing,\u201d \u201cstates\u2019 rights,\u201d tax cuts \u2014 that hurt Black communities while sounding race-neutral.",
+    src:"Lee Atwater interview, The Nation (2012)",url:"https://www.thenation.com/article/archive/exclusive-lee-atwaters-infamous-1981-interview-southern-strategy/",
+    note:"Interpretive lens: Atwater\u2019s account is primary evidence of the strategy; reading specific later phrases as coded racial appeals is analytically contested."},
+  {era:4,valence:"achievement",year:1983,sys:[10],title:"Guion Bluford \u2014 first Black American in space",
+    detail:"Aboard the shuttle Challenger, Bluford became the first African American to fly in space; Mae Jemison became the first Black woman in space in 1992.",
+    src:"NASA"},
+  {era:4,valence:"setback",year:1986,sys:[6,7],title:"100-to-1 sentencing",
+    detail:"The Anti-Drug Abuse Act set crack-cocaine mandatory minimums 100 times harsher than for chemically identical powder \u2014 driving stark racial disparities in federal prison until the 2010 Fair Sentencing Act cut the ratio to 18-to-1.",
+    src:"NACDL, \u201cRace and the War on Drugs\u201d; Anti-Drug Abuse Act of 1986",url:"https://www.nacdl.org/Content/Race-and-the-War-on-Drugs"},
+{era:4,valence:"achievement",year:1990,sys:[9],title:"Douglas Wilder — first elected Black governor",
+    detail:"In Virginia, the grandson of enslaved people became the first Black American elected governor of a U.S. state — in the former capital of the Confederacy.",
+    src:"Library of Virginia; Britannica"},
+  {era:4,valence:"achievement",year:1992,sys:[9],title:"Carol Moseley Braun — first Black woman Senator",
+    detail:"Moseley Braun of Illinois became the first Black woman elected to the U.S. Senate — 122 years after Hiram Revels became the first Black senator.",
+    src:"U.S. Senate, Featured Biography"},
+  {era:4,valence:"achievement",year:1993,sys:[10],title:"Toni Morrison \u2014 Nobel Prize in Literature",
+    detail:"Morrison became the first Black American to win the Nobel Prize in Literature, honored for novels that gave \u201clife to an essential aspect of American reality.\u201d",
+    src:"The Nobel Prize (nobelprize.org)"},
+  {era:4,valence:"setback",year:1994,sys:[6,7],title:"1994 Crime Bill",
+    detail:"The Violent Crime Control Act expanded police, prisons, and mandatory sentencing and paid states to lengthen time served \u2014 accelerating an incarceration boom that fell hardest on Black Americans.",
+    src:"Violent Crime Control and Law Enforcement Act of 1994"},
+{era:4,valence:"achievement",year:2002,sys:[10],title:"Halle Berry — first Black woman Best Actress",
+    detail:"Berry became the first Black woman to win the Academy Award for Best Actress, for Monster's Ball — the only one to date.",
+    src:"Academy of Motion Picture Arts & Sciences"},
+  {era:4,valence:"achievement",year:2008,sys:[9],title:"Barack Obama elected President",
+    detail:"Obama became the first Black President of the United States, winning 365 electoral votes \u2014 a milestone many had thought impossible within their lifetimes. He was awarded the Nobel Peace Prize the next year.",
+    src:"The White House; Britannica, \u201cBarack Obama\u201d"},
+  {era:4,valence:"advance",year:2010,sys:[7],title:"Fair Sentencing Act",
+    detail:"Reduced the federal crack-to-powder cocaine sentencing disparity from 100-to-1 to 18-to-1 \u2014 narrowing, but not closing, a gap that had driven racial disparities in drug sentences since 1986.",
+    src:"Fair Sentencing Act of 2010, Pub. L. 111-220"},
+  {era:4,valence:"advance",year:2013,sys:[],title:"Black Lives Matter founded",
+    detail:"After George Zimmerman\u2019s acquittal in the killing of Trayvon Martin, organizers Alicia Garza, Patrisse Cullors, and Opal Tometi created #BlackLivesMatter. After Ferguson (2014) it became national; the 2020 protests were among the largest in U.S. history.",
+    src:"Britannica, \u201cBlack Lives Matter\u201d; Black Lives Matter",url:"https://www.britannica.com/topic/Black-Lives-Matter"},
+  {era:4,valence:"setback",year:2013,sys:[3,8],title:"Shelby County v. Holder",court:true,
+    detail:"By 5\u20134, the Court struck down the Voting Rights Act\u2019s coverage formula, ending preclearance. Within hours, states moved to enact voter-ID laws and close polling places; a wave of restrictions followed across the South.",
+    src:"Shelby County v. Holder, 570 U.S. 529 (2013) \u2014 Justia",url:"https://supreme.justia.com/cases/federal/us/570/529/"},
+  {era:4,valence:"achievement",year:2018,sys:[10],title:"Kendrick Lamar wins the Pulitzer",
+    detail:"Lamar\u2019s album DAMN. won the Pulitzer Prize for Music \u2014 the first time the award went to a work that was neither classical nor jazz, a landmark recognition of hip-hop as a major American art form.",
+    src:"The Pulitzer Prizes, 2018 Music"},
+  {era:4,valence:"setback",year:2020,sys:[],title:"Murder of George Floyd",
+    detail:"A Minneapolis officer knelt on Floyd\u2019s neck for over nine minutes as he said \u201cI can\u2019t breathe.\u201d The recorded killing sparked global protests; an estimated 15\u201326 million people marched in the U.S., among the largest protest movements in the nation\u2019s history.",
+    src:"Britannica, \u201cBlack Lives Matter\u201d / George Floyd protests",url:"https://www.britannica.com/topic/Black-Lives-Matter"},
+  {era:4,valence:"achievement",year:2020,sys:[9],title:"Kamala Harris \u2014 first Black Vice President",
+    detail:"Harris became the first Black person and first South Asian person elected Vice President of the United States, more than 150 years after the first Black man entered Congress.",
+    src:"Britannica, \u201cKamala Harris\u201d; U.S. Senate"},
+  {era:4,valence:"achievement",year:2022,sys:[9],title:"Ketanji Brown Jackson joins the Court",
+    detail:"Jackson became the first Black woman to serve on the U.S. Supreme Court \u2014 its third Black justice \u2014 and the first former federal public defender on the Court since Thurgood Marshall.",
+    src:"NPR; Supreme Court of the United States",url:"https://www.npr.org/2022/04/07/1090973786/ketanji-brown-jackson-first-black-woman-supreme-court"},
+  {era:4,valence:"setback",year:2021,sys:[3,8],title:"Brnovich v. DNC",court:true,
+    detail:"The first time the Court applied Section 2 of the Voting Rights Act to vote-denial rules, a 6\u20133 majority (Alito) upheld two Arizona restrictions and set \u201cguideposts\u201d that made Section 2 challenges much harder to win. In dissent, Justice Kagan warned the Court was hollowing the Act\u2019s last major tool.",
+    src:"Brnovich v. DNC, 594 U.S. ___ (2021) \u2014 Justia",url:"https://supreme.justia.com/cases/federal/us/594/19-1257/"},
+  {era:4,valence:"setback",year:2021,sys:[8],title:"The 2021 wave of voting laws",
+    detail:"After record 2020 turnout, at least 19 states passed 34 laws restricting voting access in 2021 alone, per the Brennan Center \u2014 tightening voter ID, mail ballots, and drop boxes, often in once-preclearance states like Georgia and Arizona.",
+    src:"Brennan Center for Justice, \u201cVoting Laws Roundup 2021\u201d",
+    note:"Contested framing: whether these measures suppress votes or protect election integrity is politically disputed. The closure and turnout-gap data are documented; the characterization of intent is not settled."},
+  {era:4,valence:"advance",year:2022,sys:[4],title:"Emmett Till Antilynching Act",
+    detail:"More than a century after the first attempts, Congress made lynching a federal hate crime \u2014 named for the 14-year-old whose 1955 murder in Mississippi helped ignite the civil rights movement. It passed nearly unanimously and was signed into law in March 2022.",
+    src:"Emmett Till Antilynching Act, Pub. L. 117\u2013107 (2022)"},
+  {era:4,valence:"setback",year:2023,sys:[],title:"SFFA v. Harvard",court:true,
+    detail:"By 6\u20132 (Harvard) and 6\u20133 (UNC), the Court held that race-conscious college admissions violate the Equal Protection Clause, ending the affirmative-action framework that had stood since Bakke (1978) and Grutter (2003).",
+    src:"Students for Fair Admissions v. Harvard, 600 U.S. 181 (2023) \u2014 Justia",url:"https://supreme.justia.com/cases/federal/us/600/20-1199/"},
+  {era:4,valence:"setback",year:2026,sys:[3,8],title:"Louisiana v. Callais",court:true,
+    detail:"By 6\u20133, the Court struck down Louisiana\u2019s second Black-majority congressional district as a racial gerrymander and reworked the Gingles framework so that vote-dilution claims are far harder to win. Justice Kagan\u2019s dissent: Section 2 is now \u201call but a dead letter.\u201d Within weeks, several Southern states moved to eliminate majority-minority districts.",
+    src:"Louisiana v. Callais, 606 U.S. ___ (2026) \u2014 SCOTUSblog / Brennan Center",url:"https://www.scotusblog.com/cases/louisiana-v-callais-2/"},
+];
+
+const HEROES = [
+  {era:0,name:"Frederick Douglass",when:"c.1818\u20131895",role:"Abolitionist, orator & publisher",
+    detail:"Escaped slavery in 1838 and became the era\u2019s most powerful anti-slavery voice \u2014 author of a landmark autobiography, founder of the North Star, and adviser to Lincoln on emancipation and Black enlistment.",
+    src:"U.S. National Park Service, Frederick Douglass NHS"},
+  {era:0,name:"Harriet Tubman",when:"c.1822\u20131913",role:"Underground Railroad conductor",
+    detail:"After escaping slavery, Tubman returned repeatedly to the South, guiding scores of enslaved people to freedom; during the Civil War she scouted and led an armed raid that freed some 700 people.",
+    src:"National Women\u2019s History Museum"},
+  {era:0,name:"Sojourner Truth",when:"c.1797\u20131883",role:"Abolitionist & women\u2019s-rights orator",
+    detail:"Born enslaved in New York, Truth won her freedom and became a riveting speaker linking abolition and women\u2019s rights, best known for her \u201cAin\u2019t I a Woman?\u201d address.",
+    src:"National Women\u2019s History Museum"},
+  {era:0,name:"Nat Turner",when:"1800\u20131831",role:"Led the 1831 rebellion",
+    detail:"Turner led the era\u2019s most consequential slave revolt in Southampton County, Virginia \u2014 an uprising that terrified the South and prompted harsher slave codes across the region.",
+    src:"Encyclopedia Virginia"},
+  {era:0,name:"Elizabeth Key",when:"fl. 1656",role:"Won an early freedom suit",
+    detail:"Key successfully sued for her freedom in colonial Virginia \u2014 a victory that helped prompt the 1662 law making slavery hereditary through the mother, closing that path for others.",
+    src:"Encyclopedia Virginia"},
+  {era:1,name:"Hiram Revels",when:"1827\u20131901",role:"First Black U.S. Senator (1870)",
+    detail:"A minister who raised Black regiments during the Civil War, Revels became the first Black member of Congress, fighting to reinstate ousted Black legislators and to desegregate D.C. schools.",
+    src:"U.S. Senate, Featured Biography",url:"https://www.senate.gov/senators/FeaturedBios/Featured_Bio_Revels.htm"},
+  {era:1,name:"Robert Smalls",when:"1839\u20131915",role:"War hero & Congressman",
+    detail:"Enslaved as a ship\u2019s pilot, Smalls commandeered a Confederate steamer in 1862 and delivered it to the Union; he later served five terms in Congress from South Carolina.",
+    src:"U.S. House of Representatives, History, Art & Archives"},
+  {era:1,name:"Blanche K. Bruce",when:"1841\u20131898",role:"First Black senator to serve a full term",
+    detail:"Born enslaved in Virginia, Bruce represented Mississippi in the U.S. Senate from 1875 to 1881, the only Black senator to complete a full term until the late 20th century.",
+    src:"U.S. Senate, Featured Biography"},
+  {era:2,name:"Ida B. Wells",when:"1862\u20131931",role:"Anti-lynching journalist",
+    detail:"Born enslaved, Wells became an investigative journalist whose meticulously documented reporting exposed lynching as racial terror, not punishment for crime \u2014 and a founder of the NAACP.",
+    src:"National Women\u2019s History Museum"},
+  {era:2,name:"W.E.B. Du Bois",when:"1868\u20131963",role:"Scholar & NAACP co-founder",
+    detail:"The first Black American to earn a Harvard PhD, Du Bois reframed race in American life (The Souls of Black Folk), co-founded the NAACP in 1909, and edited its journal The Crisis for decades.",
+    src:"Britannica; NAACP"},
+  {era:2,name:"Mary McLeod Bethune",when:"1875\u20131955",role:"Educator & adviser",
+    detail:"Bethune founded the school that became Bethune-Cookman University and led the National Council of Negro Women, becoming the most influential Black adviser in FDR\u2019s administration.",
+    src:"National Women\u2019s History Museum; U.S. National Park Service"},
+  {era:2,name:"A. Philip Randolph",when:"1889\u20131979",role:"Labor leader",
+    detail:"Randolph built the first major Black labor union and threatened a 1941 march on Washington that pressured FDR to desegregate defense industries \u2014 a tactic that anticipated the 1963 march he helped lead.",
+    src:"AFL-CIO; Britannica"},
+  {era:3,name:"Martin Luther King Jr.",when:"1929\u20131968",role:"Movement leader",
+    detail:"As head of the SCLC, King led the Montgomery boycott, the Birmingham campaign, and the 1963 March on Washington, articulating a philosophy of nonviolent resistance until his assassination in 1968.",
+    src:"The King Center; Nobel Prize (1964)"},
+  {era:3,name:"Rosa Parks",when:"1913\u20132005",role:"Montgomery bus boycott",
+    detail:"A seasoned NAACP organizer, Parks refused to give up her bus seat in 1955, sparking the 381-day Montgomery boycott that launched the modern movement and Dr. King\u2019s leadership.",
+    src:"Library of Congress; U.S. National Park Service"},
+  {era:3,name:"Thurgood Marshall",when:"1908\u20131993",role:"Architect of Brown; first Black Justice",
+    detail:"As the NAACP\u2019s chief lawyer, Marshall won Brown v. Board and dozens of other cases; in 1967 he became the first Black justice of the U.S. Supreme Court.",
+    src:"Supreme Court of the United States; Britannica"},
+  {era:3,name:"John Lewis",when:"1940\u20132020",role:"SNCC leader & Congressman",
+    detail:"Lewis led the 1965 Selma march and was beaten on \u201cBloody Sunday,\u201d helping force passage of the Voting Rights Act; he served 17 terms in Congress as its \u201cconscience.\u201d",
+    src:"U.S. House of Representatives, History, Art & Archives"},
+  {era:3,name:"Fannie Lou Hamer",when:"1917\u20131977",role:"Voting-rights organizer",
+    detail:"A Mississippi sharecropper, Hamer was jailed and beaten for registering voters and electrified the 1964 Democratic convention with the Mississippi Freedom Democratic Party\u2019s challenge.",
+    src:"National Women\u2019s History Museum"},
+  {era:3,name:"Malcolm X",when:"1925\u20131965",role:"Black self-determination",
+    detail:"A spellbinding orator, Malcolm X pressed for Black dignity, self-defense, and self-determination, offering a sharper counterpoint to nonviolence before his 1965 assassination.",
+    src:"Britannica"},
+  {era:4,name:"Shirley Chisholm",when:"1924\u20132005",role:"First Black congresswoman & presidential candidate",
+    detail:"\u201cUnbought and unbossed,\u201d Chisholm became the first Black woman in Congress (1968) and the first Black candidate to seek a major party\u2019s presidential nomination (1972).",
+    src:"National Women\u2019s History Museum",url:"https://www.womenshistory.org/education-resources/biographies/shirley-chisholm"},
+  {era:4,name:"Barack Obama",when:"b.1961",role:"44th President",
+    detail:"After a rapid rise from the Illinois legislature to the U.S. Senate, Obama was elected the first Black President in 2008 and served two terms, winning the Nobel Peace Prize in 2009.",
+    src:"The White House; Britannica"},
+  {era:4,name:"Kamala Harris",when:"b.1964",role:"First Black Vice President",
+    detail:"A former prosecutor, California attorney general, and U.S. senator, Harris became the first Black and first South Asian Vice President in 2020 and the Democratic presidential nominee in 2024.",
+    src:"Britannica; U.S. Senate"},
+  {era:4,name:"Ketanji Brown Jackson",when:"b.1970",role:"First Black woman on the Supreme Court",
+    detail:"A former federal public defender and appeals-court judge, Jackson was confirmed in 2022 as the first Black woman to serve on the U.S. Supreme Court.",
+    src:"NPR; Supreme Court of the United States",url:"https://www.npr.org/2022/04/07/1090973786/ketanji-brown-jackson-first-black-woman-supreme-court"},
+  {era:4,name:"Angela Davis",when:"b.1944",role:"Scholar, organizer & prison-abolition advocate",
+    detail:"A philosopher and activist who became a global symbol of resistance after her 1970–72 imprisonment and acquittal. Tied to the Black Panther and Communist movements, she has spent decades writing and organizing against a prison system she links to the legacy of slavery.",
+    src:"Encyclopaedia Britannica; University of California"},
+  {era:4,name:"Bryan Stevenson",when:"b.1959",role:"Founder, Equal Justice Initiative",
+    detail:"A defense attorney and author of Just Mercy, Stevenson founded the EJI, documented thousands of racial-terror lynchings, and built the national memorial confronting that history in Montgomery.",
+    src:"Equal Justice Initiative",url:"https://eji.org/"},
+  {era:4,name:"Stacey Abrams",when:"b.1973",role:"Voting-rights organizer",
+    detail:"After a narrow 2018 loss in the Georgia governor\u2019s race, Abrams built voter-registration and anti-suppression organizations widely credited with expanding turnout among voters of color.",
+    src:"Britannica"},
+];
+
+/* ===================== RENDER ===================== */
+const VAL_COLOR={advance:"var(--gain)",setback:"var(--control)",compromise:"var(--brass)",achievement:"var(--achieve)"};
+const VAL_KIND={advance:"Advance",setback:"Setback",compromise:"Compromise",achievement:"Achievement"};
+const ERA_NAMES=ERAS.map(e=>e.title);
+const ERA_SHORT=["Enslavement","Reconstruction","Jim Crow","Civil Rights","Post-CR"];
+
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function srcHTML(d){const n=esc(d.src||"");return d.url?('Source: <a href="'+d.url+'" target="_blank" rel="noopener">'+n+'</a>'):('Source: '+n);}
+
+const erabar=document.getElementById('erabar');
+const sysList=document.getElementById('systemsList');
+const evList=document.getElementById('eventsList');
+const hList=document.getElementById('heroesList');
+const heroSect=document.getElementById('heroSect');
+const lens=document.getElementById('lens');
+const lensText=document.getElementById('lensText');
+const sysHint=document.getElementById('sysHint');
+const detail=document.getElementById('detail');
+
+let selectedEra=4, activeSys=null;
+
+/* ---- detail panel ---- */
+function showDetail(d){
+  detail.style.borderColor=d.color||"var(--line)";
+  let h='<p class="dkind" style="color:'+(d.color||"var(--brass)")+'">'+esc(d.kind)+'</p>'+
+        '<h3>'+esc(d.title)+'</h3>'+
+        '<p class="dyr">'+esc(d.year)+(d.eraLabel?' \u00b7 '+esc(d.eraLabel):'')+'</p>'+
+        '<p class="dtext">'+d.detail+'</p>';
+  if(d.note) h+='<p class="dnote">'+d.note+'</p>';
+  if(d.threadIdx!=null){
+    h+='<p class="dlink">\u21b3 <button data-thread="'+d.threadIdx+'">trace the \u201c'+esc(SYSTEMS[d.threadIdx].title)+'\u201d thread across all eras</button></p>';
+  }
+  h+='<p class="dsrc">'+srcHTML(d)+'</p>';
+  detail.innerHTML=h;
+  const tb=detail.querySelector('[data-thread]');
+  if(tb) tb.addEventListener('click',()=>onSystemClick(parseInt(tb.getAttribute('data-thread'),10)));
+  if(window.matchMedia('(max-width:820px)').matches) detail.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function showEraDetail(i){const e=ERAS[i];
+  showDetail({kind:"Era \u00b7 high level",title:e.title,year:e.start+' \u2013 '+e.end+'  ('+(e.end-e.start)+' years)',
+    detail:e.detail,src:e.src,url:e.url,color:e.color});}
+function showSysDetail(s){const idx=SYSTEMS.indexOf(s);const n=EVENTS.filter(e=>e.sys.includes(idx)).length;
+  showDetail({kind:(s.pos?"Throughline \u00b7 thread":"System of control \u00b7 thread"),title:s.title,year:s.start+'\u2013'+s.end+'  \u00b7  '+n+' moments',
+    detail:s.detail,src:s.src,url:s.url,note:s.note,color:s.pos?'var(--gain)':'var(--brass)'});}
+
+/* ---- era bar ---- */
+ERAS.forEach((e,i)=>{
+  const yrs=e.end-e.start;
+  const seg=document.createElement('button');
+  seg.className='eraseg'; seg.setAttribute('role','tab'); seg.setAttribute('aria-selected','false');
+  seg.style.background=e.color; seg.style.flex=yrs+' 0 96px';
+  seg.innerHTML='<span class="en">'+e.title+'</span><span class="ey">'+e.start+'\u2013'+e.end+'</span><span class="ed">'+yrs+' years</span>';
+  seg.addEventListener('click',()=>selectEra(i));
+  erabar.appendChild(seg);
+});
+
+function overlaps(s,e,a,b){return s<b && e>a;}
+
+/* ---- list renderers ---- */
+function renderSystems(list, active){
+  sysList.innerHTML='';
+  list.forEach(s=>{
+    const idx=SYSTEMS.indexOf(s);
+    const b=document.createElement('button'); b.className='syscard'+(idx===active?' active':'')+(s.pos?' pos':'');
+    b.innerHTML='<div class="st">'+s.title+'<span class="chev">'+(idx===active?'\u25BC tracing':'\u203A trace')+'</span></div>'+
+                '<div class="sy">'+s.start+'\u2013'+s.end+'</div>';
+    b.addEventListener('click',()=>onSystemClick(idx));
+    sysList.appendChild(b);
+  });
+}
+function renderEvents(list, showEra){
+  evList.innerHTML='';
+  list.forEach(ev=>{
+    const color=VAL_COLOR[ev.valence]||'var(--control)';
+    const b=document.createElement('button'); b.className='evrow';
+    b.innerHTML='<span class="ey">'+ev.year+'</span>'+
+      '<span class="dot'+(ev.court?' court':'')+'" style="background:'+color+'"></span>'+
+      '<span class="et">'+ev.title+'</span>'+
+      (showEra?'<span class="epill">'+ERA_SHORT[ev.era]+'</span>':'');
+    b.addEventListener('click',()=>showDetail({
+      kind:(ev.court?'Supreme Court \u00b7 ':'')+(VAL_KIND[ev.valence]||'Setback'),
+      title:ev.title,year:''+ev.year,eraLabel:ERA_NAMES[ev.era],detail:ev.detail,src:ev.src,url:ev.url,note:ev.note,
+      color:color,threadIdx:(ev.sys&&ev.sys.length?ev.sys[0]:null)}));
+    evList.appendChild(b);
+  });
+}
+function renderHeroes(list){
+  hList.innerHTML='';
+  list.forEach(h=>{
+    const b=document.createElement('button'); b.className='herocard';
+    b.innerHTML='<div class="hn">'+h.name+'</div><div class="hr">'+h.when+' \u00b7 '+h.role+'</div>';
+    b.addEventListener('click',()=>showDetail({kind:"Hero \u00b7 "+ERA_NAMES[h.era],title:h.name,year:h.when,
+      detail:h.detail+' <span style="color:var(--paper-dim)">('+esc(h.role)+')</span>',src:h.src,url:h.url,color:'var(--achieve)'}));
+    hList.appendChild(b);
+  });
+}
+
+/* ---- modes ---- */
+function render(){
+  Array.from(erabar.children).forEach((c,k)=>c.setAttribute('aria-selected',(activeSys===null && k===selectedEra)?'true':'false'));
+  /* Heroes always reflect the selected era and are never filtered by a thread \u2014 they sit outside the era \u2192 system \u2192 policy filter chain. */
+  const hs=HEROES.filter(h=>h.era===selectedEra);
+  document.getElementById('heroCnt').textContent='\u00b7 '+hs.length;
+  renderHeroes(hs);
+
+  if(activeSys===null){
+    lens.classList.remove('on');
+    sysHint.style.display='';
+    document.getElementById('evHead').firstChild.textContent='\u2462 Laws, rulings, milestones & achievements ';
+    const era=ERAS[selectedEra];
+    const sys=SYSTEMS.filter(s=>overlaps(s.start,s.end,era.start,era.end));
+    document.getElementById('sysCnt').textContent=sys.length?('\u00b7 '+sys.length+' active'):'\u00b7 none active';
+    renderSystems(sys,null);
+    const evs=EVENTS.filter(e=>e.era===selectedEra).sort((a,b)=>a.year-b.year);
+    document.getElementById('evCnt').textContent='\u00b7 '+evs.length;
+    renderEvents(evs,false);
+  } else {
+    const s=SYSTEMS[activeSys];
+    lens.classList.add('on');
+    document.getElementById('lensIcon').textContent=s.pos?'★':'⛓';
+    lens.style.borderColor=s.pos?'var(--gain)':'var(--brass)';
+    lens.style.borderLeftColor=s.pos?'var(--gain)':'var(--brass)';
+    lensText.innerHTML='Tracing one thread across all eras: <b>'+esc(s.title)+'</b> &nbsp;('+s.start+'\u2013'+s.end+')';
+    sysHint.style.display='none';
+    document.getElementById('evHead').firstChild.textContent='\u2462 This thread, in chronological order ';
+    document.getElementById('sysCnt').textContent='\u00b7 click to close';
+    renderSystems([s],activeSys);
+    const evs=EVENTS.filter(e=>e.sys.includes(activeSys)).sort((a,b)=>a.year-b.year);
+    document.getElementById('evCnt').textContent='\u00b7 '+evs.length+' across '+new Set(evs.map(e=>e.era)).size+' eras';
+    renderEvents(evs,true);
+  }
+}
+
+function selectEra(i){selectedEra=i;activeSys=null;render();showEraDetail(i);}
+function onSystemClick(idx){
+  if(activeSys===idx){activeSys=null;render();showEraDetail(selectedEra);}
+  else{activeSys=idx;render();showSysDetail(SYSTEMS[idx]);}
+}
+document.getElementById('lensClear').addEventListener('click',()=>{activeSys=null;render();showEraDetail(selectedEra);});
+
+selectEra(4); // open on the present so current events are visible first
+</script>
+</body>
+</html>
