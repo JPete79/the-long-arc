@@ -55,7 +55,9 @@
 
   .explorer{display:grid;grid-template-columns:1fr 384px;gap:30px;margin-top:30px;align-items:start}
   .main{min-width:0}
-  .side{position:sticky;top:18px}
+  .side{position:sticky;top:calc(var(--stick-h, 18px) + 16px)}
+  .stickytop{position:sticky;top:0;z-index:30;background:var(--ink);padding:8px 0 11px;
+    box-shadow:0 14px 22px -16px rgba(0,0,0,.85)}
 
   /* lens banner */
   .lens{display:none;align-items:center;gap:13px;background:var(--ink-2);
@@ -142,20 +144,36 @@
   @media (max-width:820px){
     .explorer{grid-template-columns:1fr}
     .side{position:static}
+    .stickytop{position:static;box-shadow:none;padding:0}
     .erabar{flex-wrap:wrap}
     .eraseg{flex:1 1 140px}
   }
   @media (max-width:640px){.wrap{padding:32px 16px 70px}}
+  .scopebar{margin:11px 0 3px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    font-family:"Spline Sans Mono",monospace;font-size:11.5px;color:var(--paper-dim);min-height:24px}
+  .scope-txt b{color:var(--paper);font-weight:600}
+  .scope-reset{border:1px solid var(--line);background:var(--ink-3);color:var(--paper-dim);
+    font-family:inherit;font-size:11px;padding:3px 10px;border-radius:999px;cursor:pointer;transition:.12s}
+  .scope-reset:hover{color:var(--paper);border-color:var(--paper-dim)}
+  .evera{display:flex;align-items:baseline;gap:9px;margin:20px 0 9px;padding-bottom:6px;
+    border-bottom:1px solid var(--line);font-family:"Fraunces",serif;font-size:14.5px;color:var(--paper)}
+  .evera:first-child{margin-top:2px}
+  .evera-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0;align-self:center}
+  .evera-nm{font-weight:600}
+  .evera-yr{font-family:"Spline Sans Mono",monospace;font-size:10.5px;color:var(--paper-dim);font-weight:400}
+  .evempty{padding:16px 4px;color:var(--paper-dim);font-size:13px;line-height:1.55;font-style:italic}
 </style>
 </head>
 <body>
 <div class="wrap">
   <p class="eyebrow">A documentary explorer · 1619–2026 · every entry sourced</p>
   <h1>The long arc bends <em>slowly</em>, and not on its own.</h1>
-  <p class="lede">Pick an era to open it. Inside, click any <span class="dim">thread</span> to follow it across <em>all</em> eras — systems of control like slavery, disenfranchisement, and housing, but also the countercurrents of Black political power and achievement. Watch each one built, contested, stripped away, and rebuilt. Click any law, ruling, or person for the full account and its source.</p>
+  <p class="lede">Click one or more eras to set a timeframe — or leave them all clear to span the full arc, 1619–2026. Then open any <span class="dim">thread</span> to trace it <em>within</em> that window: systems of control like slavery and disenfranchisement, and the countercurrents of Black political power and achievement. Watch each one built, contested, stripped away, and rebuilt. Click any law, ruling, or person for the full account and its source.</p>
 
-  <p class="barlabel">① Choose an era — width shows its length in years</p>
+  <div class="stickytop">
+  <p class="barlabel">① Choose your timeframe — click one or more eras (or leave all clear for the whole arc). Width shows each era’s length in years.</p>
   <div class="erabar" id="erabar" role="tablist" aria-label="Historical eras"></div>
+  <div class="scopebar" id="scopeBar"></div>
 
   <div class="keyline">
     <span><span class="k-dot" style="background:var(--gain)"></span>advance</span>
@@ -164,6 +182,8 @@
     <span><span class="k-dot" style="background:var(--achieve)"></span>achievement</span>
     <span><span class="k-dia" style="background:var(--paper-dim)"></span>Supreme Court ruling</span>
   </div>
+
+  </div><!-- /stickytop -->
 
   <div class="explorer">
     <div class="main">
@@ -175,7 +195,7 @@
 
       <div class="sect">
         <div class="secthead">② Threads — trace any across time <span class="cnt" id="sysCnt"></span></div>
-        <div class="hint" id="sysHint">Click any thread to follow it across every era. <span style="color:var(--control)">Red</span> = a system of control; <span style="color:var(--gain)">green</span> = a countercurrent of Black power &amp; achievement.</div>
+        <div class="hint" id="sysHint">Click a thread to trace it through your chosen timeframe (or all of history). <span style="color:var(--control)">Red</span> = a system of control; <span style="color:var(--gain)">green</span> = a countercurrent of Black power &amp; achievement.</div>
         <div id="systemsList"></div>
       </div>
       <div class="sect">
@@ -453,6 +473,9 @@ const EVENTS = [
     detail:"In a 1981 interview (its audio released in 2012), GOP strategist Lee Atwater described how openly racist appeals had given way to abstract substitutes \u2014 \u201cforced busing,\u201d \u201cstates\u2019 rights,\u201d tax cuts \u2014 that hurt Black communities while sounding race-neutral.",
     src:"Lee Atwater interview, The Nation (2012)",url:"https://www.thenation.com/article/archive/exclusive-lee-atwaters-infamous-1981-interview-southern-strategy/",
     note:"Interpretive lens: Atwater\u2019s account is primary evidence of the strategy; reading specific later phrases as coded racial appeals is analytically contested."},
+  {era:4,valence:"achievement",year:1983,sys:[10],title:"Martin Luther King Jr. Day established",
+    detail:"After a 15-year campaign, a federal holiday honoring Dr. King was signed into law in 1983 and first observed in 1986 — the first U.S. federal holiday dedicated to an African American. Several states resisted for years before all 50 recognized it.",
+    src:"U.S. National Archives; The King Center"},
   {era:4,valence:"achievement",year:1983,sys:[10],title:"Guion Bluford \u2014 first Black American in space",
     detail:"Aboard the shuttle Challenger, Bluford became the first African American to fly in space; Mae Jemison became the first Black woman in space in 1992.",
     src:"NASA"},
@@ -505,6 +528,9 @@ const EVENTS = [
     detail:"After record 2020 turnout, at least 19 states passed 34 laws restricting voting access in 2021 alone, per the Brennan Center \u2014 tightening voter ID, mail ballots, and drop boxes, often in once-preclearance states like Georgia and Arizona.",
     src:"Brennan Center for Justice, \u201cVoting Laws Roundup 2021\u201d",
     note:"Contested framing: whether these measures suppress votes or protect election integrity is politically disputed. The closure and turnout-gap data are documented; the characterization of intent is not settled."},
+  {era:4,valence:"achievement",year:2021,sys:[10],title:"Juneteenth becomes a federal holiday",
+    detail:"Congress made Juneteenth — June 19, marking the 1865 day that word of emancipation finally reached the enslaved in Galveston, Texas — a federal holiday. It was the first new federal holiday since Martin Luther King Jr. Day, and the first to commemorate the end of slavery.",
+    src:"Juneteenth National Independence Day Act, Pub. L. 117–17 (2021)"},
   {era:4,valence:"advance",year:2022,sys:[4],title:"Emmett Till Antilynching Act",
     detail:"More than a century after the first attempts, Congress made lynching a federal hate crime \u2014 named for the 14-year-old whose 1955 murder in Mississippi helped ignite the civil rights movement. It passed nearly unanimously and was signed into law in March 2022.",
     src:"Emmett Till Antilynching Act, Pub. L. 117\u2013107 (2022)"},
@@ -613,7 +639,8 @@ const lensText=document.getElementById('lensText');
 const sysHint=document.getElementById('sysHint');
 const detail=document.getElementById('detail');
 
-let selectedEra=4, activeSys=null;
+let selEras=new Set(), activeSys=null;
+function inScope(era){return selEras.size===0 || selEras.has(era);}
 
 /* ---- detail panel ---- */
 function showDetail(d){
@@ -646,7 +673,7 @@ ERAS.forEach((e,i)=>{
   seg.className='eraseg'; seg.setAttribute('role','tab'); seg.setAttribute('aria-selected','false');
   seg.style.background=e.color; seg.style.flex=yrs+' 0 96px';
   seg.innerHTML='<span class="en">'+e.title+'</span><span class="ey">'+e.start+'\u2013'+e.end+'</span><span class="ed">'+yrs+' years</span>';
-  seg.addEventListener('click',()=>selectEra(i));
+  seg.addEventListener('click',()=>toggleEra(i));
   erabar.appendChild(seg);
 });
 
@@ -664,21 +691,39 @@ function renderSystems(list, active){
     sysList.appendChild(b);
   });
 }
-function renderEvents(list, showEra){
+function appendEventRow(ev){
+  const color=VAL_COLOR[ev.valence]||'var(--control)';
+  const b=document.createElement('button'); b.className='evrow';
+  b.innerHTML='<span class="ey">'+ev.year+'</span>'+
+    '<span class="dot'+(ev.court?' court':'')+'" style="background:'+color+'"></span>'+
+    '<span class="et">'+ev.title+'</span>';
+  b.addEventListener('click',()=>showDetail({
+    kind:(ev.court?'Supreme Court · ':'')+(VAL_KIND[ev.valence]||'Setback'),
+    title:ev.title,year:''+ev.year,eraLabel:ERA_NAMES[ev.era],detail:ev.detail,src:ev.src,url:ev.url,note:ev.note,
+    color:color,threadIdx:(ev.sys&&ev.sys.length?ev.sys[0]:null)}));
+  evList.appendChild(b);
+}
+function renderEvents(list, grouped){
   evList.innerHTML='';
-  list.forEach(ev=>{
-    const color=VAL_COLOR[ev.valence]||'var(--control)';
-    const b=document.createElement('button'); b.className='evrow';
-    b.innerHTML='<span class="ey">'+ev.year+'</span>'+
-      '<span class="dot'+(ev.court?' court':'')+'" style="background:'+color+'"></span>'+
-      '<span class="et">'+ev.title+'</span>'+
-      (showEra?'<span class="epill">'+ERA_SHORT[ev.era]+'</span>':'');
-    b.addEventListener('click',()=>showDetail({
-      kind:(ev.court?'Supreme Court \u00b7 ':'')+(VAL_KIND[ev.valence]||'Setback'),
-      title:ev.title,year:''+ev.year,eraLabel:ERA_NAMES[ev.era],detail:ev.detail,src:ev.src,url:ev.url,note:ev.note,
-      color:color,threadIdx:(ev.sys&&ev.sys.length?ev.sys[0]:null)}));
-    evList.appendChild(b);
-  });
+  if(!list.length){
+    const em=document.createElement('div'); em.className='evempty';
+    em.textContent='No moments on this thread within the chosen timeframe. Widen the eras above, or clear the thread.';
+    evList.appendChild(em); return;
+  }
+  if(grouped){
+    [0,1,2,3,4].forEach(function(eraIdx){
+      const inEra=list.filter(function(e){return e.era===eraIdx;});
+      if(!inEra.length) return;
+      const hd=document.createElement('div'); hd.className='evera';
+      hd.innerHTML='<span class="evera-dot" style="background:'+ERAS[eraIdx].color+'"></span>'+
+                   '<span class="evera-nm">'+ERA_NAMES[eraIdx]+'</span>'+
+                   '<span class="evera-yr">'+ERAS[eraIdx].start+'–'+ERAS[eraIdx].end+'</span>';
+      evList.appendChild(hd);
+      inEra.forEach(appendEventRow);
+    });
+  } else {
+    list.forEach(appendEventRow);
+  }
 }
 function renderHeroes(list){
   hList.innerHTML='';
@@ -693,48 +738,88 @@ function renderHeroes(list){
 
 /* ---- modes ---- */
 function render(){
-  Array.from(erabar.children).forEach((c,k)=>c.setAttribute('aria-selected',(activeSys===null && k===selectedEra)?'true':'false'));
-  /* Heroes always reflect the selected era and are never filtered by a thread \u2014 they sit outside the era \u2192 system \u2192 policy filter chain. */
-  const hs=HEROES.filter(h=>h.era===selectedEra);
-  document.getElementById('heroCnt').textContent='\u00b7 '+hs.length;
+  Array.from(erabar.children).forEach(function(c,k){c.setAttribute('aria-selected', selEras.has(k)?'true':'false');});
+  const scopeEras = selEras.size ? Array.from(selEras).sort(function(a,b){return a-b;}) : [0,1,2,3,4];
+  const multi = scopeEras.length>1;
+  updateScopeBar();
+
+  // Heroes: always in the chosen timeframe, never filtered by a thread
+  const hs=HEROES.filter(function(h){return inScope(h.era);});
+  document.getElementById('heroCnt').textContent='· '+hs.length;
   renderHeroes(hs);
 
-  if(activeSys===null){
-    lens.classList.remove('on');
-    sysHint.style.display='';
-    document.getElementById('evHead').firstChild.textContent='\u2462 Laws, rulings, milestones & achievements ';
-    const era=ERAS[selectedEra];
-    const sys=SYSTEMS.filter(s=>overlaps(s.start,s.end,era.start,era.end));
-    document.getElementById('sysCnt').textContent=sys.length?('\u00b7 '+sys.length+' active'):'\u00b7 none active';
-    renderSystems(sys,null);
-    const evs=EVENTS.filter(e=>e.era===selectedEra).sort((a,b)=>a.year-b.year);
-    document.getElementById('evCnt').textContent='\u00b7 '+evs.length;
-    renderEvents(evs,false);
-  } else {
+  // Threads available in the timeframe (or just the active one)
+  let sysToShow;
+  if(activeSys!==null){ sysToShow=[SYSTEMS[activeSys]]; }
+  else { sysToShow=SYSTEMS.filter(function(s){return scopeEras.some(function(e){return overlaps(s.start,s.end,ERAS[e].start,ERAS[e].end);});}); }
+  renderSystems(sysToShow, activeSys);
+  document.getElementById('sysCnt').textContent = activeSys!==null ? '· click to close' : ('· '+sysToShow.length);
+
+  // Events: in the timeframe, AND on the active thread if one is chosen
+  let evs=EVENTS.filter(function(e){return inScope(e.era);});
+  if(activeSys!==null) evs=evs.filter(function(e){return e.sys.includes(activeSys);});
+  evs.sort(function(a,b){return a.year-b.year;});
+  document.getElementById('evCnt').textContent='· '+evs.length;
+
+  if(activeSys!==null){
     const s=SYSTEMS[activeSys];
     lens.classList.add('on');
     document.getElementById('lensIcon').textContent=s.pos?'★':'⛓';
     lens.style.borderColor=s.pos?'var(--gain)':'var(--brass)';
     lens.style.borderLeftColor=s.pos?'var(--gain)':'var(--brass)';
-    lensText.innerHTML='Tracing one thread across all eras: <b>'+esc(s.title)+'</b> &nbsp;('+s.start+'\u2013'+s.end+')';
+    const scopeTxt = selEras.size ? ('within '+scopeEras.map(function(e){return ERA_SHORT[e];}).join(' + ')) : 'across all of history';
+    lensText.innerHTML='Tracing <b>'+esc(s.title)+'</b> '+scopeTxt+' &nbsp;· '+evs.length+' moment'+(evs.length===1?'':'s');
     sysHint.style.display='none';
-    document.getElementById('evHead').firstChild.textContent='\u2462 This thread, in chronological order ';
-    document.getElementById('sysCnt').textContent='\u00b7 click to close';
-    renderSystems([s],activeSys);
-    const evs=EVENTS.filter(e=>e.sys.includes(activeSys)).sort((a,b)=>a.year-b.year);
-    document.getElementById('evCnt').textContent='\u00b7 '+evs.length+' across '+new Set(evs.map(e=>e.era)).size+' eras';
-    renderEvents(evs,true);
+    document.getElementById('evHead').firstChild.textContent='③ This thread'+(multi?', by era':'')+' ';
+  } else {
+    lens.classList.remove('on');
+    sysHint.style.display='';
+    document.getElementById('evHead').firstChild.textContent='③ Laws, rulings, milestones & achievements ';
   }
+  renderEvents(evs, multi);
+  if(typeof syncStick==="function") syncStick();
 }
 
-function selectEra(i){selectedEra=i;activeSys=null;render();showEraDetail(i);}
+function updateScopeBar(){
+  const sb=document.getElementById('scopeBar');
+  if(selEras.size===0){
+    sb.innerHTML='<span class="scope-txt">Showing <b>all of history</b>, 1619–2026. Click an era to focus — pick more than one to combine.</span>';
+    return;
+  }
+  const names=Array.from(selEras).sort(function(a,b){return a-b;}).map(function(e){return ERA_SHORT[e];}).join(' + ');
+  sb.innerHTML='<span class="scope-txt">Timeframe: <b>'+esc(names)+'</b></span><button class="scope-reset" id="scopeReset">✕ show all history</button>';
+  const r=document.getElementById('scopeReset');
+  if(r) r.addEventListener('click',function(){selEras.clear(); render(); showScopeDetail();});
+}
+function showScopeDetail(){
+  if(selEras.size===1){ showEraDetail(Array.from(selEras)[0]); return; }
+  showDetail({kind:'The long arc · overview',
+    title: selEras.size ? ('Timeframe: '+Array.from(selEras).sort(function(a,b){return a-b;}).map(function(e){return ERA_NAMES[e];}).join(', ')) : 'The whole arc, 1619–2026',
+    year: selEras.size ? (selEras.size+' eras in view') : ('5 eras · 11 threads · '+EVENTS.length+' moments'),
+    detail:'Choose one or more eras above to set your timeframe, then open a thread to trace it within that window. With no era chosen, every thread runs through all of history.',
+    color:'var(--brass)'});
+}
+function toggleEra(i){
+  if(selEras.has(i)) selEras.delete(i); else selEras.add(i);
+  render();
+  showEraDetail(i);
+}
 function onSystemClick(idx){
-  if(activeSys===idx){activeSys=null;render();showEraDetail(selectedEra);}
-  else{activeSys=idx;render();showSysDetail(SYSTEMS[idx]);}
+  if(activeSys===idx){ activeSys=null; render(); showScopeDetail(); }
+  else { activeSys=idx; render(); showSysDetail(SYSTEMS[idx]); }
 }
-document.getElementById('lensClear').addEventListener('click',()=>{activeSys=null;render();showEraDetail(selectedEra);});
+document.getElementById('lensClear').addEventListener('click',function(){activeSys=null;render();showScopeDetail();});
 
-selectEra(4); // open on the present so current events are visible first
+function syncStick(){
+  const st=document.querySelector(".stickytop"); if(!st) return;
+  const h=window.matchMedia("(max-width:820px)").matches?0:st.offsetHeight;
+  document.documentElement.style.setProperty("--stick-h", h+"px");
+}
+window.addEventListener("resize", syncStick);
+window.addEventListener("load", syncStick);
+
+render(); showScopeDetail(); syncStick(); // open showing the whole arc; choose a timeframe to narrow
+
 </script>
 </body>
 </html>
